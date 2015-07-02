@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.helper.AssertHelper;
+import org.snaker.engine.helper.QueryCondation;
 
 /**
  * 通用查询过滤器
@@ -25,84 +26,99 @@ import org.snaker.engine.helper.AssertHelper;
  * @since 1.2.5
  */
 public class QueryFilter implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8155136377911571881L;
-    public static final String ASC = "asc";
-    public static final String DESC = "desc";
+//    public static final String ASC = "asc";
+//    public static final String DESC = "desc";
 
     //排序字段
+	@QueryCondation
     private String orderBy;
     //排序类型ASC/DESC
-    private String order;
+	@QueryCondation
+	private String order;
 
 	/*********common parameters***********/
 	/**
 	 * 流程定义id
 	 */
+	@QueryCondation
 	private String processId;
 	/**
 	 * 流程定义版本号
 	 */
+	@QueryCondation
 	private Integer version;
 	/**
 	 * 流程实例id
 	 */
+	@QueryCondation
 	private String orderId;
 	/**
 	 * 任务id
 	 */
+	@QueryCondation
 	private String taskId;
 	/**
 	 * 创建时间范围
 	 */
+	@QueryCondation
 	private String createTimeStart;
+	@QueryCondation
 	private String createTimeEnd;
+	@QueryCondation
 	private String operateTime;
 	/**
 	 * 操作人员id
 	 */
-	private String[] operators;
+	@QueryCondation
+	private String operator;
 	/**
 	 * 名称
 	 */
-	private String[] names;
+	@QueryCondation
+	private String name;
 	/**
 	 * 显示名称
 	 */
+	@QueryCondation
 	private String displayName;
 	/**
 	 * 状态
 	 */
+	@QueryCondation
 	private Integer state;
 	/**
 	 * 流程类型
 	 */
+	@QueryCondation
 	private String processType;
 	/**
 	 * exclude ids
 	 */
+	@QueryCondation
 	private String[] excludedIds;
 	
 	/*********order parameters***********/
 	/**
 	 * 父实例id
 	 */
+	@QueryCondation
 	private String parentId;
 	/**
 	 * 实例编号
 	 */
+	@QueryCondation
 	private String orderNo;
 	
 	/*********task parameters***********/
 	/**
 	 * 任务类型
 	 */
+	@QueryCondation
 	private Integer taskType;
 	/**
 	 * 任务参与类型
 	 */
+	@QueryCondation
 	private Integer performType;
 	
 	public String getProcessId() {
@@ -145,32 +161,30 @@ public class QueryFilter implements Serializable {
 		this.createTimeEnd = createTimeEnd;
 		return this;
 	}
-	public String[] getOperators() {
-		return operators;
+	public String getOperators() {
+		return operator;
 	}
-	public QueryFilter setOperators(String[] operators) {
-		AssertHelper.notNull(operators);
-		this.operators = operators;
+	public QueryFilter setOperators(String operator) {
+		AssertHelper.notNull(operator);
+		this.operator = operator;
 		return this;
 	}
 	public QueryFilter setOperator(String operator) {
 		AssertHelper.notEmpty(operator);
-		this.operators = new String[1];
-		this.operators[0] = operator;
+		this.operator = operator;
 		return this;
 	}
-	public String[] getNames() {
-		return names;
+	public String getName() {
+		return name;
 	}
-	public QueryFilter setNames(String[] names) {
-		AssertHelper.notNull(names);
-		this.names = names;
+	public QueryFilter setNames(String name) {
+		AssertHelper.notNull(name);
+		this.name = name;
 		return this;
 	}
 	public QueryFilter setName(String name) {
 		AssertHelper.notEmpty(name);
-		this.names = new String[1];
-		this.names[0] = name;
+		this.name = name;
 		return this;
 	}
 	public String getDisplayName() {
@@ -275,7 +289,7 @@ public class QueryFilter implements Serializable {
         //检查order字符串的合法值
         String[] orders = StringUtils.split(lowcaseOrder, ',');
         for (String orderStr : orders) {
-            if (!StringUtils.equals(DESC, orderStr) && !StringUtils.equals(ASC, orderStr)) {
+            if (!StringUtils.equals("desc", orderStr) && !StringUtils.equals("asc", orderStr)) {
                 throw new IllegalArgumentException("排序类型[" + orderStr + "]不是合法值");
             }
         }

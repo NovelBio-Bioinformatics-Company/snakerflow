@@ -20,9 +20,10 @@ import org.snaker.engine.DecisionHandler;
 import org.snaker.engine.Expression;
 import org.snaker.engine.SnakerException;
 import org.snaker.engine.core.Execution;
-import org.snaker.engine.core.ServiceContext;
 import org.snaker.engine.helper.ClassHelper;
+import org.snaker.engine.helper.SpringFactoryService;
 import org.snaker.engine.helper.StringHelper;
+import org.snaker.engine.impl.JuelExpression;
 
 /**
  * 决策定义decision元素
@@ -55,7 +56,7 @@ public class DecisionModel extends NodeModel {
 	public void exec(Execution execution) {
 		log.info(execution.getOrder().getId() + "->decision execution.getArgs():" + execution.getArgs());
 		if(expression == null) {
-			expression = ServiceContext.getContext().find(Expression.class);
+			expression = SpringFactoryService.getBean(JuelExpression.class);
 		}
 		log.info("expression is " + expression);
 		if(expression == null) throw new SnakerException("表达式解析器为空，请检查配置.");

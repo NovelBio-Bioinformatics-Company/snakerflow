@@ -22,12 +22,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
-import org.snaker.engine.core.ServiceContext;
 import org.snaker.engine.entity.Task;
+import org.snaker.engine.helper.SpringFactoryService;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.scheduling.IScheduler;
 import org.snaker.engine.scheduling.JobEntity;
 import org.snaker.engine.scheduling.JobEntity.JobType;
+import org.springframework.stereotype.Component;
 
 /**
  * 时限控制拦截器
@@ -36,6 +37,7 @@ import org.snaker.engine.scheduling.JobEntity.JobType;
  * @author yuqs
  * @since 1.4
  */
+@Component
 public class SchedulerInterceptor implements SnakerInterceptor {
 	private static final Logger log = LoggerFactory.getLogger(SchedulerInterceptor.class);
 	/**
@@ -86,7 +88,7 @@ public class SchedulerInterceptor implements SnakerInterceptor {
 	
 	private void schedule(JobEntity entity) {
 	    if(scheduler == null) {
-	    	scheduler = ServiceContext.getContext().find(IScheduler.class);
+	    	scheduler = SpringFactoryService.getBean(IScheduler.class);
 	    }
 	    if(scheduler != null) {
 	    	scheduler.schedule(entity);

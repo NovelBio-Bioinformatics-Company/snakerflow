@@ -15,7 +15,8 @@
 package test.task.actor;
 
 import org.junit.Test;
-import org.snaker.engine.test.TestSnakerBase;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs

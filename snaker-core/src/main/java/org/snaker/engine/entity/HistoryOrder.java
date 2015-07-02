@@ -19,14 +19,18 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.snaker.engine.SnakerEngine;
-import org.snaker.engine.core.ServiceContext;
+import org.snaker.engine.core.SnakerEngineImpl;
 import org.snaker.engine.helper.JsonHelper;
+import org.snaker.engine.helper.SpringFactoryService;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 历史流程实例实体类
  * @author yuqs
  * @since 1.0
  */
+@Document(collection = "wf_hist_order")
 public class HistoryOrder implements Serializable {
 
 	/**
@@ -36,6 +40,7 @@ public class HistoryOrder implements Serializable {
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
 	/**
 	 * 流程定义ID
@@ -211,7 +216,7 @@ public class HistoryOrder implements Serializable {
     }
 	
 	public String getProcessName() {
-		SnakerEngine engine = ServiceContext.getEngine();
+		SnakerEngine engine = SpringFactoryService.getBean(SnakerEngineImpl.class);
 		Process process = engine.process().getProcessById(this.processId);
 		if(process == null) return this.processId;
 		return process.getDisplayName();

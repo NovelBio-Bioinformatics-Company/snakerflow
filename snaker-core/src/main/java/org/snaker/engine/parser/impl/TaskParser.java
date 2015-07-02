@@ -18,6 +18,7 @@ import org.snaker.engine.model.FieldModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -30,6 +31,7 @@ import java.util.List;
  * @author yuqs
  * @since 1.0
  */
+@Component(value="task")
 public class TaskParser extends AbstractNodeParser {
 	/**
 	 * 由于任务节点需要解析form、assignee属性，这里覆盖抽象类方法实现

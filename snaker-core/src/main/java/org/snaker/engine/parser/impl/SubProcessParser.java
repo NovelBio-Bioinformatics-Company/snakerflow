@@ -20,6 +20,7 @@ import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.model.SubProcessModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 
 /**
@@ -27,6 +28,7 @@ import org.w3c.dom.Element;
  * @author yuqs
  * @since 1.0
  */
+@Component(value="subprocess")
 public class SubProcessParser extends AbstractNodeParser {
 	/**
 	 * 产生SubProcessModel模型对象

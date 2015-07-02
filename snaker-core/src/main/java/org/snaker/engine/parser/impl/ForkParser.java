@@ -17,12 +17,14 @@ package org.snaker.engine.parser.impl;
 import org.snaker.engine.model.ForkModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 
 /**
  * 分支节点解析类
  * @author yuqs
  * @since 1.0
  */
+@Component(value="fork")
 public class ForkParser extends AbstractNodeParser {
 	/**
 	 * 产生ForkModel模型对象

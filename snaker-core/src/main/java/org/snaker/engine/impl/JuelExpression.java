@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import javax.el.ExpressionFactory;
 
 import org.snaker.engine.Expression;
+import org.springframework.stereotype.Component;
 
 import de.odysseus.el.ExpressionFactoryImpl;
 import de.odysseus.el.util.SimpleContext;
@@ -29,6 +30,7 @@ import de.odysseus.el.util.SimpleContext;
  * @author yuqs
  * @since 1.2
  */
+@Component
 public class JuelExpression implements Expression {
 	ExpressionFactory factory = new ExpressionFactoryImpl();
 	

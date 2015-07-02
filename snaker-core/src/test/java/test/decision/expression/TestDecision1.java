@@ -21,7 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.helper.StreamHelper;
-import org.snaker.engine.test.TestSnakerBase;
+
+import test.TestSnakerBase;
 
 /**
  * 测试决策分支流程1：决策节点decision使用expr属性决定后置路线

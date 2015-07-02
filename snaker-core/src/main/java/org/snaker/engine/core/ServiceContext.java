@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.Context;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.helper.AssertHelper;
+import org.springframework.stereotype.Component;
 
 /**
  * 单实例的服务上下文
@@ -28,6 +29,7 @@ import org.snaker.engine.helper.AssertHelper;
  * @author yuqs
  * @since 1.5
  */
+@Component
 public abstract class ServiceContext {
 	private static final Logger log = LoggerFactory.getLogger(ServiceContext.class);
 	

@@ -17,6 +17,7 @@ package org.snaker.engine.parser.impl;
 import org.snaker.engine.model.DecisionModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 
 /**
@@ -24,6 +25,7 @@ import org.w3c.dom.Element;
  * @author yuqs
  * @since 1.0
  */
+@Component(value="decision")
 public class DecisionParser extends AbstractNodeParser {
 	/**
 	 * 产生DecisionModel模型对象

@@ -31,7 +31,17 @@ import org.snaker.engine.model.TaskModel;
 public interface SnakerEngine {
 	public static final String ADMIN = "snaker.admin";
 	public static final String AUTO = "snaker.auto";
-    public static final String ID = "snaker.orderNo";
+   public static final String ID = "snaker.orderNo";
+   
+	/** 审核结果参数名 */
+   public static final String AUDITRES = "auditRes";
+	/** 审核结果具体值:不同意 */
+   public static final String DISAGREE = "0";
+	/** 审核结果具体值:同意 */
+   public static final String AGREE = "1";
+   /** 单据Id */
+   public static final String BILLID = "billId";
+	
 	/**
 	 * 根据Configuration对象配置实现类
 	 * @param config 全局配置对象
@@ -43,31 +53,31 @@ public interface SnakerEngine {
 	 * 获取process服务
 	 * @return IProcessService 流程定义服务
 	 */
-	public IProcessService process();
+	public IMgmtProcess process();
 	
 	/**
 	 * 获取查询服务
 	 * @return IQueryService 常用查询服务
 	 */
-	public IQueryService query();
+	public IMgmtQuery query();
 	
 	/**
 	 * 获取实例服务
 	 * @return IQueryService 流程实例服务
 	 */
-	public IOrderService order();
+	public IMgmtOrder order();
 	
 	/**
 	 * 获取任务服务
 	 * @return ITaskService 任务服务
 	 */
-	public ITaskService task();
+	public IMgmtTask task();
 	
 	/**
 	 * 获取管理服务
 	 * @return IManagerService 管理服务
 	 */
-	public IManagerService manager();
+	public IMgmtManager manager();
 	
 	/**
 	 * 根据流程定义ID启动流程实例

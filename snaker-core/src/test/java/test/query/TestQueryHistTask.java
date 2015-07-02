@@ -15,11 +15,12 @@
 package test.query;
 
 import org.junit.Test;
-import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.WorkItem;
-import org.snaker.engine.test.TestSnakerBase;
+import org.snaker.engine.model.PageModel;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs
@@ -28,9 +29,9 @@ import org.snaker.engine.test.TestSnakerBase;
 public class TestQueryHistTask extends TestSnakerBase {
 	@Test
 	public void test() {
-		System.out.println(queryService.getHistoryTasks(new Page<HistoryTask>(), 
+		System.out.println(queryService.getHistoryTasks(new PageModel(), 
 				new QueryFilter().setOperator("admin")));
-		System.out.println(queryService.getHistoryWorkItems(new Page<WorkItem>(), 
+		System.out.println(queryService.getHistoryWorkItems(new PageModel(), 
 				new QueryFilter().setOperator("admin")));
 	}
 }

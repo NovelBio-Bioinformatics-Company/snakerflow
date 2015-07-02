@@ -14,28 +14,30 @@
  */
 package org.snaker.engine.entity;
 
-import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
 
-import org.snaker.engine.SnakerException;
-import org.snaker.engine.helper.StreamHelper;
+import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.model.ProcessModel;
+import org.snaker.engine.parser.ModelParser;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 流程定义实体类
  * @author yuqs
  * @since 1.0
  */
+@Document(collection = "wf_process")
 public class Process implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6541688543201014542L;
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
 	/**
 	 * 版本
@@ -59,7 +61,8 @@ public class Process implements Serializable {
 	 */
 	private String instanceUrl;
     /**
-     * 是否可用的开关
+     * 是否可用的开关<br/>
+     * 0 非活动状态,不可用.
      */
 	private Integer state;
 	/**
@@ -73,15 +76,18 @@ public class Process implements Serializable {
 	/**
 	 * 流程定义模型
 	 */
-    private ProcessModel model;
+    @Transient
+    @JSONField(serialize = false) 
+	private ProcessModel model;
     /**
      * 流程定义xml
      */
-    private Blob content;
+    private String content;
     /**
-     * 流程定义字节数组
+     * 流程定义
      */
-    private byte[] bytes;
+    @JSONField(serialize = false) 
+    private String bytes;
     
 	public String getName() {
 		return name;
@@ -115,18 +121,24 @@ public class Process implements Serializable {
 	}
 	
 	public ProcessModel getModel() {
+		if (model == null && StringUtils.isNotEmpty(bytes)) {
+			model = ModelParser.parse(bytes.getBytes());
+		}
 		return model;
 	}
 	
 	/**
 	 * setter name/displayName/instanceUrl
-	 * @param processModel
+	 * @param processk
 	 */
 	public void setModel(ProcessModel processModel) {
-		this.model = processModel;
-    	this.name = processModel.getName();
-    	this.displayName = processModel.getDisplayName();
-    	this.instanceUrl = processModel.getInstanceUrl();
+		try {
+			this.model = processModel;
+			this.name = processModel.getName();
+			this.displayName = processModel.getDisplayName();
+			this.instanceUrl = processModel.getInstanceUrl();
+		} catch (Exception e) {
+		}
 	}
 	public String getInstanceUrl() {
 		return instanceUrl;
@@ -134,32 +146,32 @@ public class Process implements Serializable {
 	public void setInstanceUrl(String instanceUrl) {
 		this.instanceUrl = instanceUrl;
 	}
-	public byte[] getDBContent() {
-		if(this.content != null) {
-			try {
-				return this.content.getBytes(1L, Long.valueOf(this.content.length()).intValue());
-			} catch (Exception e) {
-				try {
-					InputStream is = content.getBinaryStream();
-					return StreamHelper.readBytes(is);
-				} catch (Exception e1) {
-					throw new SnakerException("couldn't extract stream out of blob", e1);
-				}
-			}
-		}
-		
-		return bytes;
-	}
-	public Blob getContent() {
+//	public byte[] getDBContent() {
+//		if(this.content != null) {
+//			try {
+//				return this.content.getBytes(1L, Long.valueOf(this.content.length()).intValue());
+//			} catch (Exception e) {
+//				try {
+//					InputStream is = content.getBinaryStream();
+//					return StreamHelper.readBytes(is);
+//				} catch (Exception e1) {
+//					throw new SnakerException("couldn't extract stream out of blob", e1);
+//				}
+//			}
+//		}
+//		
+//		return bytes;
+//	}
+	public String getContent() {
 		return content;
 	}
-	public void setContent(Blob content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
-	public byte[] getBytes() {
+	public String getBytes() {
 		return bytes;
 	}
-	public void setBytes(byte[] bytes) {
+	public void setBytes(String bytes) {
 		this.bytes = bytes;
 	}
     public Integer getVersion() {

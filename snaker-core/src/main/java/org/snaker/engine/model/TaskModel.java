@@ -14,6 +14,9 @@
  */
 package org.snaker.engine.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.snaker.engine.AssignmentHandler;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.handlers.impl.MergeActorHandler;
@@ -21,9 +24,6 @@ import org.snaker.engine.helper.AssertHelper;
 import org.snaker.engine.helper.ClassHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.scheduling.JobCallback;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 任务定义task元素
@@ -145,10 +145,16 @@ public class TaskModel extends WorkModel {
 		return TASKTYPE_MAJOR.equalsIgnoreCase(this.taskType);
 	}
 	
+	/**
+	 * 参与者变量名称
+	 */
 	public String getAssignee() {
 		return assignee;
 	}
 	
+	/**
+	 * 参与者变量名称
+	 */
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
 	}

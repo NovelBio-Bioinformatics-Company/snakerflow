@@ -18,16 +18,21 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import org.snaker.engine.helper.JsonHelper;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.model.TaskModel.TaskType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 任务实体类
  * @author yuqs
  * @since 1.0
  */
+@Document(collection = "wf_task")
 public class Task implements Serializable, Cloneable {
 	/**
 	 * 
@@ -37,6 +42,7 @@ public class Task implements Serializable, Cloneable {
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
 	/**
 	 * 版本
@@ -67,6 +73,11 @@ public class Task implements Serializable, Cloneable {
      */
     private String operator;
     /**
+     * 任务审核结果.
+     * @link SnakerEngine 0-不同意,1-同意.
+     */
+    private String auditRes;
+    /**
      * 任务创建时间
      */
     private String createTime;
@@ -93,7 +104,7 @@ public class Task implements Serializable, Cloneable {
     /**
      * 任务参与者列表
      */
-    private String[] actorIds;
+    private Set<String> actorIds;
     /**
      * 父任务Id
      */
@@ -105,6 +116,7 @@ public class Task implements Serializable, Cloneable {
     /**
      * 保持模型对象
      */
+   @Transient
     private TaskModel model;
     
     public Task() {
@@ -157,6 +169,14 @@ public class Task implements Serializable, Cloneable {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+
+	public String getAuditRes() {
+		return auditRes;
+	}
+
+	public void setAuditRes(String auditRes) {
+		this.auditRes = auditRes;
 	}
 
 	public String getCreateTime() {
@@ -215,17 +235,17 @@ public class Task implements Serializable, Cloneable {
 		this.orderId = orderId;
 	}
 
-	public String[] getActorIds() {
+	public Set<String> getActorIds() {
 		if(actorIds == null) {
 			String actorStr = (String)getVariableMap().get(KEY_ACTOR);
 			if(actorStr != null) {
-				actorIds = actorStr.split(",");
+				 Collections.addAll(actorIds, actorStr.split(","));
 			}
 		}
 		return actorIds;
 	}
 
-	public void setActorIds(String[] actorIds) {
+	public void setActorIds(Set<String> actorIds) {
 		this.actorIds = actorIds;
 	}
 	

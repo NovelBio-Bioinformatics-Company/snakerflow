@@ -161,6 +161,9 @@ public class ProcessModel extends BaseModel {
 		this.nodes = nodes;
 	}
 
+	/**
+	 * 期望完成时间
+	 */
 	public String getExpireTime() {
 		return expireTime;
 	}

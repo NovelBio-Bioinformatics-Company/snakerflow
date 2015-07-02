@@ -17,15 +17,19 @@ package org.snaker.engine.entity;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import org.snaker.engine.helper.JsonHelper;
 import org.snaker.engine.model.TaskModel.PerformType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 历史任务实体类
  * @author yuqs
  * @since 1.0
  */
+@Document(collection = "wf_hist_task")
 public class HistoryTask implements Serializable {
 
 	/**
@@ -35,6 +39,7 @@ public class HistoryTask implements Serializable {
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
     /**
      * 流程实例ID
@@ -64,6 +69,12 @@ public class HistoryTask implements Serializable {
      * 任务处理者ID
      */
     private String operator;
+    
+    /**
+     * 任务审核结果.
+     * @link SnakerEngine 0-不同意,1-同意.
+     */
+    private String auditRes;
     /**
      * 任务创建时间
      */
@@ -83,7 +94,7 @@ public class HistoryTask implements Serializable {
     /**
      * 任务参与者列表
      */
-    private String[] actorIds;
+    private Set<String> actorIds;
     /**
      * 父任务Id
      */
@@ -120,6 +131,7 @@ public class HistoryTask implements Serializable {
     	this.displayName = task.getDisplayName();
     	this.taskName = task.getTaskName();
     	this.taskType = task.getTaskType();
+    	this.auditRes = task.getAuditRes();
     	this.expireTime = task.getExpireTime();
     	this.actionUrl = task.getActionUrl();
     	this.actorIds = task.getActorIds();
@@ -181,6 +193,14 @@ public class HistoryTask implements Serializable {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+	
+	public String getAuditRes() {
+		return auditRes;
+	}
+
+	public void setAuditRes(String auditRes) {
+		this.auditRes = auditRes;
 	}
 
 	public String getCreateTime() {
@@ -247,14 +267,14 @@ public class HistoryTask implements Serializable {
 		this.performType = performType;
 	}
 
-	public String[] getActorIds() {
+	public Set<String> getActorIds() {
 		return actorIds;
 	}
 
-	public void setActorIds(String[] actorIds) {
+	public void setActorIds(Set<String> actorIds) {
 		this.actorIds = actorIds;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getVariableMap() {
         Map<String, Object> map = JsonHelper.fromJson(this.variable, Map.class);

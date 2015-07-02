@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.snaker.engine.TaskAccessStrategy;
 import org.snaker.engine.entity.TaskActor;
+import org.springframework.stereotype.Component;
 
 /**
  * 基于用户或组（角色、部门等）的访问策略类
@@ -26,6 +27,7 @@ import org.snaker.engine.entity.TaskActor;
  * @author yuqs
  * @since 1.4
  */
+@Component
 public class GeneralAccessStrategy implements TaskAccessStrategy {
 	/**
 	 * 根据操作人id确定所有的组集合

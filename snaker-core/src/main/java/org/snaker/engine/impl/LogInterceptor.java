@@ -19,12 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Task;
+import org.springframework.stereotype.Component;
 
 /**
  * 日志拦截器
  * @author yuqs
  * @since 1.0
  */
+@Component
 public class LogInterceptor implements SnakerInterceptor {
 	private static final Logger log = LoggerFactory.getLogger(LogInterceptor.class);
 	/**

@@ -22,12 +22,14 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.Completion;
 import org.snaker.engine.entity.HistoryOrder;
 import org.snaker.engine.entity.HistoryTask;
+import org.springframework.stereotype.Component;
 
 /**
  * 默认的任务、实例完成时触发的动作
  * @author yuqs
  * @since 2.2.0
  */
+@Component
 public class GeneralCompletion implements Completion {
     private static final Logger log = LoggerFactory.getLogger(GeneralCompletion.class);
 

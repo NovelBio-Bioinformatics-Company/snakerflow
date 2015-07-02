@@ -24,7 +24,8 @@ import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.model.TaskModel;
-import org.snaker.engine.test.TestSnakerBase;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs

@@ -16,7 +16,6 @@ package org.snaker.engine;
 
 import java.util.List;
 
-import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.CCOrder;
 import org.snaker.engine.entity.HistoryOrder;
@@ -28,6 +27,8 @@ import org.snaker.engine.entity.Surrogate;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.entity.TaskActor;
 import org.snaker.engine.entity.WorkItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * 数据库访问接口
@@ -201,7 +202,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<Surrogate> 委托代理对象集合
 	 */
-	public List<Surrogate> getSurrogate(Page<Surrogate> page, QueryFilter filter);
+	public Page<Surrogate> getSurrogate(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据任务id查询任务对象
@@ -289,7 +290,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<Process> 流程定义集合
 	 */
-	public List<Process> getProcesss(Page<Process> page, QueryFilter filter);
+	public Page<Process> getProcesss(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 分页查询流程实例
@@ -297,7 +298,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<Order> 活动流程实例集合
 	 */
-	public List<Order> getActiveOrders(Page<Order> page, QueryFilter filter);
+	public Page<Order> getActiveOrders(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 分页查询活动任务列表
@@ -305,7 +306,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<Task> 活动任务集合
 	 */
-	public List<Task> getActiveTasks(Page<Task> page, QueryFilter filter);
+	public Page<Task> getActiveTasks(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 分页查询历史流程实例
@@ -313,7 +314,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<HistoryOrder> 历史流程实例集合
 	 */
-	public List<HistoryOrder> getHistoryOrders(Page<HistoryOrder> page, QueryFilter filter);
+	public Page<HistoryOrder> getHistoryOrders(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据参与者分页查询已完成的历史任务
@@ -321,7 +322,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<HistoryTask> 历史任务集合
 	 */
-	public List<HistoryTask> getHistoryTasks(Page<HistoryTask> page, QueryFilter filter);
+	public Page<HistoryTask> getHistoryTasks(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据查询的参数，分页对象，返回分页后的活动工作项
@@ -329,7 +330,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<WorkItem> 活动工作项
 	 */
-	public List<WorkItem> getWorkItems(Page<WorkItem> page, QueryFilter filter);
+	public Page<WorkItem> getWorkItems(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据查询的参数，分页对象，返回分页后的抄送任务项
@@ -337,7 +338,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<WorkItem> 活动工作项
 	 */
-	public List<HistoryOrder> getCCWorks(Page<HistoryOrder> page, QueryFilter filter);
+	public Page<HistoryOrder> getCCWorks(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据流程定义ID、参与者分页查询已完成的历史任务项
@@ -345,7 +346,7 @@ public interface DBAccess {
 	 * @param filter 查询过滤器
 	 * @return List<WorkItem> 历史工作项
 	 */
-	public List<WorkItem> getHistoryWorkItems(Page<WorkItem> page, QueryFilter filter);
+	public Page<WorkItem> getHistoryWorkItems(Pageable page, QueryFilter filter);
 	
 	/**
 	 * 根据类型clazz、Sql语句、参数查询单个对象
@@ -374,7 +375,7 @@ public interface DBAccess {
 	 * @param args 参数列表
 	 * @return 结果对象列表
 	 */
-	public <T> List<T> queryList(Page<T> page, QueryFilter filter, Class<T> clazz, String sql, Object... args);
+	public <T> Page<T> queryList(Pageable page, QueryFilter filter, Class<T> clazz, String sql, Object... args);
 
     /**
      * 运行脚本文件

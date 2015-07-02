@@ -17,6 +17,7 @@ package org.snaker.engine.parser.impl;
 import org.snaker.engine.model.CustomModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 
 /**
@@ -24,6 +25,7 @@ import org.w3c.dom.Element;
  * @author yuqs
  * @since 1.0
  */
+@Component(value="custom")
 public class CustomParser extends AbstractNodeParser {
 	protected void parseNode(NodeModel node, Element element) {
 		CustomModel custom = (CustomModel)node;

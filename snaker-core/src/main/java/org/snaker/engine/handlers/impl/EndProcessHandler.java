@@ -27,6 +27,7 @@ import org.snaker.engine.handlers.IHandler;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.SubProcessModel;
+import org.springframework.data.domain.Page;
 
 /**
  * 结束流程实例的处理器
@@ -60,9 +61,9 @@ public class EndProcessHandler implements IHandler {
 			ProcessModel pm = process.getModel();
 			if(pm == null) return;
 			SubProcessModel spm = (SubProcessModel)pm.getNode(order.getParentNodeName());
-            Execution newExecution = new Execution(engine, process, parentOrder, execution.getArgs());
-            newExecution.setChildOrderId(order.getId());
-            newExecution.setTask(execution.getTask());
+            	Execution newExecution = new Execution(engine, process, parentOrder, execution.getArgs());
+            	newExecution.setChildOrderId(order.getId());
+            	newExecution.setTask(execution.getTask());
 			spm.execute(newExecution);
 			/**
 			 * SubProcessModel执行结果的tasks合并到当前执行对象execution的tasks列表中

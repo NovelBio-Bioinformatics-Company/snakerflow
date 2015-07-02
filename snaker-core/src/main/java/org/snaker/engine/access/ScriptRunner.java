@@ -17,13 +17,19 @@
 
 package org.snaker.engine.access;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.Reader;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snaker.engine.helper.AssertHelper;
 import org.snaker.engine.helper.StreamHelper;
-
-import java.io.*;
-import java.sql.*;
 
 /**
  * SQL脚本运行类

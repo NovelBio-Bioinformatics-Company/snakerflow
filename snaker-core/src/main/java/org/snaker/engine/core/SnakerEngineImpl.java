@@ -21,17 +21,12 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.snaker.engine.DBAccess;
-import org.snaker.engine.IManagerService;
-import org.snaker.engine.IOrderService;
-import org.snaker.engine.IProcessService;
-import org.snaker.engine.IQueryService;
-import org.snaker.engine.ITaskService;
+import org.snaker.engine.IMgmtManager;
+import org.snaker.engine.IMgmtOrder;
+import org.snaker.engine.IMgmtProcess;
+import org.snaker.engine.IMgmtQuery;
+import org.snaker.engine.IMgmtTask;
 import org.snaker.engine.SnakerEngine;
-import org.snaker.engine.access.transaction.TransactionInterceptor;
-import org.snaker.engine.cache.CacheManager;
-import org.snaker.engine.cache.CacheManagerAware;
-import org.snaker.engine.cache.memory.MemoryCacheManager;
 import org.snaker.engine.cfg.Configuration;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
@@ -44,12 +39,15 @@ import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.StartModel;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.model.TransitionModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 基本的流程引擎实现类
  * @author yuqs
  * @since 1.0
  */
+@Component
 public class SnakerEngineImpl implements SnakerEngine {
 	private static final Logger log = LoggerFactory.getLogger(SnakerEngineImpl.class);
 	/**
@@ -59,62 +57,67 @@ public class SnakerEngineImpl implements SnakerEngine {
 	/**
 	 * 流程定义业务类
 	 */
-	protected IProcessService processService;
+	@Autowired
+	protected IMgmtProcess processService;
 	/**
 	 * 流程实例业务类
 	 */
-	protected IOrderService orderService;
+	@Autowired
+	protected IMgmtOrder orderService;
 	/**
 	 * 任务业务类
 	 */
-	protected ITaskService taskService;
+	@Autowired
+	protected IMgmtTask taskService;
 	/**
 	 * 查询业务类
 	 */
-	protected IQueryService queryService;
+	@Autowired
+	protected IMgmtQuery queryService;
 	/**
 	 * 管理业务类
 	 */
-	protected IManagerService managerService;
+	@Autowired
+	protected IMgmtManager managerService;
 	
 	/**
 	 * 根据serviceContext上下文，查找processService、orderService、taskService服务
 	 */
 	public SnakerEngine configure(Configuration config) {
-		this.configuration = config;
-		processService = ServiceContext.find(IProcessService.class);
-		queryService = ServiceContext.find(IQueryService.class);
-		orderService = ServiceContext.find(IOrderService.class);
-		taskService = ServiceContext.find(ITaskService.class);
-		managerService = ServiceContext.find(IManagerService.class);
-		
-		/*
-		 * 无spring环境，DBAccess的实现类通过服务上下文获取
-		 */
-		if(!this.configuration.isCMB()) {
-			DBAccess access = ServiceContext.find(DBAccess.class);
-			AssertHelper.notNull(access);
-			TransactionInterceptor interceptor = ServiceContext.find(TransactionInterceptor.class);
-			//如果初始化配置时提供了访问对象，就对DBAccess进行初始化
-			Object accessObject = this.configuration.getAccessDBObject();
-			if(accessObject != null) {
-				if(interceptor != null) {
-					interceptor.initialize(accessObject);
-				}
-				access.initialize(accessObject);
-			}
-			setDBAccess(access);
-            access.runScript();
-		}
-		CacheManager cacheManager = ServiceContext.find(CacheManager.class);
-		if(cacheManager == null) {
-			//默认使用内存缓存管理器
-			cacheManager = new MemoryCacheManager();
-		}
-		List<CacheManagerAware> cacheServices = ServiceContext.findList(CacheManagerAware.class);
-		for(CacheManagerAware cacheService : cacheServices) {
-			cacheService.setCacheManager(cacheManager);
-		}
+//		this.configuration = config;
+//		processService = ServiceContext.find(IProcessService.class);
+//		queryService = ServiceContext.find(IQueryService.class);
+//		orderService = ServiceContext.find(IOrderService.class);
+//		taskService = ServiceContext.find(ITaskService.class);
+//		managerService = ServiceContext.find(IManagerService.class);
+//		
+//		/*
+//		 * 无spring环境，DBAccess的实现类通过服务上下文获取
+//		 */
+//		if(!this.configuration.isCMB()) {
+//			DBAccess access = ServiceContext.find(MongoDBAccess.class);
+//			AssertHelper.notNull(access);
+////			TransactionInterceptor interceptor = ServiceContext.find(TransactionInterceptor.class);
+//			//如果初始化配置时提供了访问对象，就对DBAccess进行初始化
+//			Object accessObject = this.configuration.getAccessDBObject();
+//			if(accessObject != null) {
+////				if(interceptor != null) {
+////					interceptor.initialize(accessObject);
+////				}
+//				access.initialize(accessObject);
+//			}
+//			setDBAccess(access);
+//            access.runScript();
+//		}
+//		CacheManager cacheManager = ServiceContext.find(CacheManager.class);
+//		if(cacheManager == null) {
+//			//默认使用内存缓存管理器
+//			cacheManager = new MemoryCacheManager();
+//		}
+//		List<CacheManagerAware> cacheServices = ServiceContext.findList(CacheManagerAware.class);
+//		for(CacheManagerAware cacheService : cacheServices) {
+//			cacheService.setCacheManager(cacheManager);
+//		}
 		return this;
 	}
 	
@@ -122,17 +125,17 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 注入dbAccess
 	 * @param access db访问对象
 	 */
-	protected void setDBAccess(DBAccess access) {
-		List<AccessService> services = ServiceContext.findList(AccessService.class);
-		for(AccessService service : services) {
-			service.setAccess(access);
-		}
-	}
+//	protected void setDBAccess(DBAccess access) {
+//		List<AccessService> services = ServiceContext.findList(AccessService.class);
+//		for(AccessService service : services) {
+//			service.setAccess(access);
+//		}
+//	}
 
 	/**
 	 * 获取流程定义服务
 	 */
-	public IProcessService process() {
+	public IMgmtProcess process() {
 		AssertHelper.notNull(processService);
 		return processService;
 	}
@@ -140,7 +143,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	/**
 	 * 获取查询服务
 	 */
-	public IQueryService query() {
+	public IMgmtQuery query() {
 		AssertHelper.notNull(queryService);
 		return queryService;
 	}
@@ -149,7 +152,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 获取实例服务
 	 * @since 1.2.2
 	 */
-	public IOrderService order() {
+	public IMgmtOrder order() {
 		AssertHelper.notNull(orderService);
 		return orderService;
 	}
@@ -158,7 +161,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 获取任务服务
 	 * @since 1.2.2
 	 */
-	public ITaskService task() {
+	public IMgmtTask task() {
 		AssertHelper.notNull(taskService);
 		return taskService;
 	}
@@ -167,7 +170,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 获取管理服务
 	 * @since 1.4
 	 */
-	public IManagerService manager() {
+	public IMgmtManager manager() {
 		AssertHelper.notNull(managerService);
 		return managerService;
 	}
@@ -190,7 +193,13 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 根据流程定义ID，操作人ID，参数列表启动流程实例
 	 */
 	public Order startInstanceById(String id, String operator, Map<String, Object> args) {
+		/**modify by fans.fan 150618 启动流程时必须传入业务单据的Id
 		if(args == null) args = new HashMap<String, Object>();
+		*/
+		if (args == null || !args.containsKey("billId")) {
+			throw new RuntimeException("必须传入业务单据[billId],才能启动流程");
+		}
+		//end by fans.fan
 		Process process = process().getProcessById(id);
 		process().check(process, id);
 		return startProcess(process, operator, args);
@@ -216,8 +225,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 根据流程名称、版本号、操作人启动流程实例
 	 * @since 1.3
 	 */
-	public Order startInstanceByName(String name, Integer version,
-			String operator) {
+	public Order startInstanceByName(String name, Integer version, String operator) {
 		return startInstanceByName(name, version, operator, null);
 	}
 
@@ -225,8 +233,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * 根据流程名称、版本号、操作人、参数列表启动流程实例
 	 * @since 1.3
 	 */
-	public Order startInstanceByName(String name, Integer version,
-			String operator, Map<String, Object> args) {
+	public Order startInstanceByName(String name, Integer version, String operator, Map<String, Object> args) {
 		if(args == null) args = new HashMap<String, Object>();
 		Process process = process().getProcessByVersion(name, version);
 		process().check(process, name);
@@ -356,7 +363,14 @@ public class SnakerEngineImpl implements SnakerEngine {
 	 * @return Execution
 	 */
 	private Execution execute(String taskId, String operator, Map<String, Object> args) {
+		/**
+		 * modify by fans.fan 150618 必须传入审核结果. 
 		if(args == null) args = new HashMap<String, Object>();
+		 */
+		if (args == null || !args.containsKey(SnakerEngine.AUDITRES)) {
+			throw new RuntimeException("审核未传入审核结果!");
+		}
+		//end by fans.fan
 		Task task = task().complete(taskId, operator, args);
 		if(log.isDebugEnabled()) {
 			log.debug("任务[taskId=" + taskId + "]已完成");
@@ -386,23 +400,23 @@ public class SnakerEngineImpl implements SnakerEngine {
 		return execution;
 	}
 
-	public void setProcessService(IProcessService processService) {
+	public void setProcessService(IMgmtProcess processService) {
 		this.processService = processService;
 	}
 
-	public void setOrderService(IOrderService orderService) {
+	public void setOrderService(IMgmtOrder orderService) {
 		this.orderService = orderService;
 	}
 
-	public void setTaskService(ITaskService taskService) {
+	public void setTaskService(IMgmtTask taskService) {
 		this.taskService = taskService;
 	}
 
-	public void setQueryService(IQueryService queryService) {
+	public void setQueryService(IMgmtQuery queryService) {
 		this.queryService = queryService;
 	}
 
-	public void setManagerService(IManagerService managerService) {
+	public void setManagerService(IMgmtManager managerService) {
 		this.managerService = managerService;
 	}
 }

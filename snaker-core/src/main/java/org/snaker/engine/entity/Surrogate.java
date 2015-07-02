@@ -16,11 +16,15 @@ package org.snaker.engine.entity;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * 委托代理实体类
  * @author yuqs
  * @since 1.4
  */
+@Document(collection = "wf_surrogate")
 public class Surrogate implements Serializable {
 	/**
 	 * 
@@ -29,6 +33,7 @@ public class Surrogate implements Serializable {
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
 	/**
 	 * 流程name
@@ -41,7 +46,7 @@ public class Surrogate implements Serializable {
 	/**
 	 * 代理人
 	 */
-	private String surrogate;
+	private String surrogateName;
 	/**
 	 * 操作时间
 	 */
@@ -76,11 +81,11 @@ public class Surrogate implements Serializable {
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
-	public String getSurrogate() {
-		return surrogate;
+	public String getSurrogateName() {
+		return surrogateName;
 	}
-	public void setSurrogate(String surrogate) {
-		this.surrogate = surrogate;
+	public void setSurrogateName(String surrogateName) {
+		this.surrogateName = surrogateName;
 	}
 	public String getOdate() {
 		return odate;

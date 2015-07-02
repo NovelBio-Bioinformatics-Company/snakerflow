@@ -27,10 +27,11 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.Context;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.SnakerException;
-import org.snaker.engine.access.transaction.TransactionInterceptor;
 import org.snaker.engine.core.ServiceContext;
+import org.snaker.engine.core.SnakerEngineImpl;
 import org.snaker.engine.helper.ClassHelper;
 import org.snaker.engine.helper.ConfigHelper;
+import org.snaker.engine.helper.SpringFactoryService;
 import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.helper.XmlHelper;
@@ -64,7 +65,7 @@ public class Configuration {
 	/**
 	 * 事务拦截器抽象类
 	 */
-	private TransactionInterceptor interceptor = null;
+//	private TransactionInterceptor interceptor = null;
 	/**
 	 * 需要事务管理的class类型
 	 */
@@ -99,7 +100,7 @@ public class Configuration {
 		/**
 		 * 由服务上下文返回流程引擎
 		 */
-		SnakerEngine configEngine = ServiceContext.getEngine();
+		SnakerEngine configEngine = SpringFactoryService.getBean(SnakerEngineImpl.class);
 		if(configEngine == null) {
 			throw new SnakerException("配置无法发现SnakerEngine的实现类");
 		}
@@ -130,12 +131,12 @@ public class Configuration {
 		if (!isCMB()) {
 		    parser(EXT_CONFIG_FILE);
 			for(Entry<String, Class<?>> entry : txClass.entrySet()) {
-				if(interceptor != null) {
-                    Object instance = interceptor.getProxy(entry.getValue());
-                    ServiceContext.put(entry.getKey(), instance);
-				} else {
-                    ServiceContext.put(entry.getKey(), entry.getValue());
-				}
+//				if(interceptor != null) {
+//                    Object instance = interceptor.getProxy(entry.getValue());
+//                    ServiceContext.put(entry.getKey(), instance);
+//				} else {
+//				}
+				ServiceContext.put(entry.getKey(), entry.getValue());
 			}
 		}
 		
@@ -174,11 +175,11 @@ public class Configuration {
 							continue;
 						}
 						Class<?> clazz = ClassHelper.loadClass(className);
-						if(TransactionInterceptor.class.isAssignableFrom(clazz)) {
-							interceptor = (TransactionInterceptor)ClassHelper.instantiate(clazz);
-							ServiceContext.put(name, interceptor);
-							continue;
-						}
+//						if(TransactionInterceptor.class.isAssignableFrom(clazz)) {
+//							interceptor = (TransactionInterceptor)ClassHelper.instantiate(clazz);
+//							ServiceContext.put(name, interceptor);
+//							continue;
+//						}
 						if(proxy != null && proxy.equalsIgnoreCase("transaction")) {
 							txClass.put(name, clazz);
 						} else {

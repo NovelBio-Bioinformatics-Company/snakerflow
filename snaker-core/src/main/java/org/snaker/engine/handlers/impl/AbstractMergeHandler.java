@@ -16,7 +16,7 @@ package org.snaker.engine.handlers.impl;
 
 import java.util.List;
 
-import org.snaker.engine.IQueryService;
+import org.snaker.engine.IMgmtQuery;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Order;
@@ -25,6 +25,7 @@ import org.snaker.engine.handlers.IHandler;
 import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.SubProcessModel;
 import org.snaker.engine.model.TaskModel;
+import org.springframework.data.domain.Page;
 
 /**
  * 合并处理的抽象处理器
@@ -38,19 +39,19 @@ public abstract class AbstractMergeHandler implements IHandler {
 		 * 查询当前流程实例的无法参与合并的node列表
 		 * 若所有中间node都完成，则设置为已合并状态，告诉model可继续执行join的输出变迁
 		 */
-		IQueryService queryService = execution.getEngine().query();
+		IMgmtQuery queryService = execution.getEngine().query();
 		Order order = execution.getOrder();
 		ProcessModel model = execution.getModel();
-		String[] activeNodes = findActiveNodes();
+		String activeNodes = findActiveNodes();
 		boolean isSubProcessMerged = false;
 		boolean isTaskMerged = false;
 		
 		if(model.containsNodeNames(SubProcessModel.class, activeNodes)) {
 			QueryFilter filter = new QueryFilter().setParentId(order.getId())
 					.setExcludedIds(new String[]{execution.getChildOrderId()});
-			List<Order> orders = queryService.getActiveOrders(filter);
+			Page<Order> orders = queryService.getActiveOrders(filter);
 			//如果所有子流程都已完成，则表示可合并
-			if(orders == null || orders.isEmpty()) {
+			if(orders == null || orders.getContent().isEmpty()) {
 				isSubProcessMerged = true;
 			}
 		} else {
@@ -74,5 +75,5 @@ public abstract class AbstractMergeHandler implements IHandler {
 	 * 子类需要提供如何查询未合并任务的参数map
 	 * @return
 	 */
-	protected abstract String[] findActiveNodes();
+	protected abstract String findActiveNodes();
 }

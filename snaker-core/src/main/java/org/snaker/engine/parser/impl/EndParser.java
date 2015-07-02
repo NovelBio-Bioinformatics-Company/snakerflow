@@ -17,12 +17,14 @@ package org.snaker.engine.parser.impl;
 import org.snaker.engine.model.EndModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 
 /**
  * 结束节点解析类
  * @author yuqs
  * @since 1.0
  */
+@Component(value="end")
 public class EndParser extends AbstractNodeParser {
 	/**
 	 * 产生EndModel模型对象

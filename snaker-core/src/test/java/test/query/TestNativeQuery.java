@@ -14,10 +14,12 @@
  */
 package test.query;
 
+import org.h2.mvstore.Page;
 import org.junit.Test;
-import org.snaker.engine.access.Page;
 import org.snaker.engine.entity.Task;
-import org.snaker.engine.test.TestSnakerBase;
+import org.snaker.engine.model.PageModel;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs
@@ -26,6 +28,6 @@ import org.snaker.engine.test.TestSnakerBase;
 public class TestNativeQuery extends TestSnakerBase {
 	@Test
 	public void test() {
-		System.out.println(engine.query().nativeQueryList(new Page<Task>(), Task.class, "select * from wf_task where task_type=?", 0));
+		System.out.println(engine.query().nativeQueryList(new PageModel(), Task.class, "select * from wf_task where task_type=?", 0));
 	}
 }

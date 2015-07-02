@@ -21,7 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.helper.StreamHelper;
-import org.snaker.engine.test.TestSnakerBase;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs

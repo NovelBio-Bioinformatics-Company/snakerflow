@@ -53,10 +53,9 @@ public class MergeBranchHandler extends AbstractMergeHandler {
 	 * 对join节点的所有输入变迁进行递归，查找join至fork节点的所有中间task元素
 	 * @see org.snaker.engine.handlers.impl.AbstractMergeHandler#findActiveNodes()
 	 */
-	protected String[] findActiveNodes() {
+	protected String findActiveNodes() {
 		StringBuilder buffer = new StringBuilder(20);
 		findForkTaskNames(model, buffer);
-		String[] taskNames = buffer.toString().split(",");
-		return taskNames;
+		return buffer.toString();
 	}
 }

@@ -19,12 +19,15 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.snaker.engine.helper.JsonHelper;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 流程工作单实体类（一般称为流程实例）
  * @author yuqs
  * @since 1.0
  */
+@Document(collection = "wf_order")
 public class Order implements Serializable {
 	/**
 	 * 
@@ -33,6 +36,7 @@ public class Order implements Serializable {
 	/**
 	 * 主键ID
 	 */
+	@Id
 	private String id;
 	/**
 	 * 版本
@@ -95,6 +99,9 @@ public class Order implements Serializable {
 		return creator;
 	}
 
+	/**
+     * 流程实例创建者ID
+     */
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
@@ -174,6 +181,9 @@ public class Order implements Serializable {
         return map;
 	}
 
+	/**
+     * 流程实例附属变量
+     */
 	public void setVariable(String variable) {
 		this.variable = variable;
 	}

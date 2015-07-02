@@ -21,12 +21,14 @@ import org.snaker.engine.cache.Cache;
 import org.snaker.engine.cache.CacheException;
 import org.snaker.engine.cache.CacheManager;
 import org.snaker.engine.helper.StringHelper;
+import org.springframework.stereotype.Component;
 
 /**
  * 基于虚拟机内存的cache管理器
  * @author yuqs
  * @since 1.3
  */
+@Component
 public class MemoryCacheManager implements CacheManager {
 	private final ConcurrentMap<String, Cache> caches;
 	

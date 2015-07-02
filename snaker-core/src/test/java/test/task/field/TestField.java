@@ -22,7 +22,8 @@ import org.junit.Test;
 import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.TaskModel;
-import org.snaker.engine.test.TestSnakerBase;
+
+import test.TestSnakerBase;
 
 /**
  * @author yuqs

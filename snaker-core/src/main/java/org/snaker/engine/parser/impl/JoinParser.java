@@ -17,12 +17,14 @@ package org.snaker.engine.parser.impl;
 import org.snaker.engine.model.JoinModel;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.parser.AbstractNodeParser;
+import org.springframework.stereotype.Component;
 
 /**
  * 合并节点解析类
  * @author yuqs
  * @since 1.0
  */
+@Component(value="join")
 public class JoinParser extends AbstractNodeParser {
 	/**
 	 * 产生JoinModel模型对象

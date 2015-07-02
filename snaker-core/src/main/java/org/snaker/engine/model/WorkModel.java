@@ -25,12 +25,20 @@ public abstract class WorkModel extends NodeModel {
 	 */
 	private static final long serialVersionUID = 761102386160546149L;
 	/**
-	 * form
+	 * form: 个人理解是查看提交的单据的url
 	 */
 	private String form;
+	
+	/**
+	 * form: 个人理解是查看提交的单据的url
+	 */
 	public String getForm() {
 		return form;
 	}
+	
+	/**
+	 * form: 个人理解是查看提交的单据的url
+	 */
 	public void setForm(String form) {
 		this.form = form;
 	}
