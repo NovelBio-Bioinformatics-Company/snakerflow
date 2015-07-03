@@ -48,7 +48,7 @@ public class MgmtHistoryTask implements IMgmtHistoryTask {
 		repoHistoryTask.delete(id);
 	}
 	@Override
-	public List<HistoryTask> getHistoryTask(String orderId) {
+	public List<HistoryTask> findByOrderId(String orderId) {
 		return repoHistoryTask.findByOrderId(orderId);
 	}
 	

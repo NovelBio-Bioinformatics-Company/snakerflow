@@ -14,6 +14,7 @@
  */
 package org.snaker.engine;
 
+import java.util.List;
 import java.util.Map;
 
 import org.snaker.engine.entity.Order;
@@ -132,4 +133,11 @@ public interface IMgmtOrder {
 	void save(Order orderdb);
 
 	void delete(String id);
+	
+	/**
+	 * 根据业务单据Id,查找order.
+	 * @param businessId
+	 * @return
+	 */
+	public List<Order> findByBusinessId(String businessId);
 }

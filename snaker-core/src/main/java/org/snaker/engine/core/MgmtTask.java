@@ -124,6 +124,10 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		history.setFinishTime(DateHelper.getTime());
 		history.setTaskState(STATE_FINISH);
 		history.setOperator(operator);
+		//add by fans.fan 增加审核结果和审核意见的单独记录. 150702.
+		history.setAuditRes(String.valueOf(args.get(SnakerEngine.AUDIT_RES)));
+		history.setAuditOpinion(String.valueOf(args.get(SnakerEngine.AUDIT_OPINION)));
+		//end by fans.fan
 		if(history.getActorIds() == null) {
 			List<TaskActor> actors = repoTaskActor.findlsTaskActorsByTaskId(task.getId());
 			Set<String> setActorIds = new HashSet<>();

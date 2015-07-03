@@ -76,6 +76,10 @@ public class HistoryTask implements Serializable {
      */
     private String auditRes;
     /**
+     * 审核意见. 
+     */
+    private String AuditOpinion;
+    /**
      * 任务创建时间
      */
     private String createTime;
@@ -201,6 +205,14 @@ public class HistoryTask implements Serializable {
 
 	public void setAuditRes(String auditRes) {
 		this.auditRes = auditRes;
+	}
+	
+	public String getAuditOpinion() {
+		return AuditOpinion;
+	}
+
+	public void setAuditOpinion(String auditOpinion) {
+		AuditOpinion = auditOpinion;
 	}
 
 	public String getCreateTime() {

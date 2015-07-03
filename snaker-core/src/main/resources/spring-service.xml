@@ -16,11 +16,7 @@
      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     
-    <aop:aspectj-autoproxy/>
-    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />  
-     <bean id="OptimisticConcurrencyControlAspect"
-		class="com.novelbio.erp.base.aspect.OptimisticConcurrencyControlAspect"/>
-    
+   
    	<!-- 读取数据源配置文件 -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
@@ -30,37 +26,9 @@
 	<!-- 启用注解 -->
 	<context:annotation-config />
 	
-	<!-- 全局变量 -->
-	<!-- 全局变量 -->
-	<bean id="globeParameters" class="com.novelbio.erp.base.init.GlobeParameters">
-		<property name="mapParams">
-			<map>
-				<entry key="GoPathway_noteId" value="52f5fc22e4b084b1efc0f05f" />
-				<entry key="FastQC_noteId" value="52f5fc0be4b084b1efc0f05d" />
-				<entry key="BedFileOperate_noteId" value="530ff557e4b0381984eadc6c" />
-				<entry key="SnpAnno_noteId" value="530ff571e4b0381984eadc6e" />
-				<entry key="PlotChromosome_noteId" value="530ff58ae4b0381984eadc70" />
-				<entry key="PlotTss_noteId" value="530ff5a6e4b0381984eadc72" />
-				<entry key="SamToBam_noteId" value="530ff5cde4b0381984eadc74" />
-				<entry key="SamAndRPKM_noteId" value="530ff5e2e4b0381984eadc76" />
-				<entry key="RNASeqMap_noteId" value="530ff5fee4b0381984eadc78" />
-				<entry key="DNASeqMap_noteId" value="530ff612e4b0381984eadc7a" />
-				<entry key="Report_noteId" value="530ff627e4b0381984eadc7c" />
-				<entry key="Other_noteId" value="530ff639e4b0381984eadc7e" />
-				<entry key="MiRNATarget_noteId" value="530ff64ce4b0381984eadc80" />
-				<entry key="MiRNASeqAnalysis_noteId" value="530ff43fe4b0381984eadc6a" />
-				<entry key="RfamAnalysis_noteId" value="531002eee4b0381984eadc8d" />
-				<entry key="RrRNAFilter_noteId" value="534c9696e4b058e83139e7ba" />
-				<entry key="DifGene_noteId" value="5358c4e9e4b0cd80645bd77a" />
-				
-				<!-- 全局变量 -->
-				<entry key="isdev" value="${mongo.dbName}"/>
-			</map>
-		</property>
-	</bean>
+	
 	
 	<!-- 扫描此包下的注解 -->
-	<context:component-scan base-package="com.novelbio.erp" />
 	<context:component-scan base-package="org.snaker.engine" /> 
 	
 	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
@@ -95,11 +63,9 @@
 	</bean>
 
 	<!-- 映射转换器，扫描back-package目录下的文件，根据注释，把它们作为mongodb的一个collection的映射 -->
-	<mongo:mapping-converter base-package="com.novelbio.erp.*.*.model" />
 	<mongo:mapping-converter base-package="org.snaker.engine.access" /> 
 	
 	<!-- mongodb bean的仓库目录，会自动扫描扩展了MongoRepository接口的接口进行注入 -->
-	<mongo:repositories base-package="com.novelbio.erp.*.*.dao" />
  	<mongo:repositories base-package="org.snaker.engine.access" /> 
 	
 </beans>

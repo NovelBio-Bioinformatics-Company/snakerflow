@@ -196,7 +196,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 		/**modify by fans.fan 150618 启动流程时必须传入业务单据的Id
 		if(args == null) args = new HashMap<String, Object>();
 		*/
-		if (args == null || !args.containsKey("billId")) {
+		if (args == null || !args.containsKey(SnakerEngine.BILLID)) {
 			throw new RuntimeException("必须传入业务单据[billId],才能启动流程");
 		}
 		//end by fans.fan
@@ -367,7 +367,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 		 * modify by fans.fan 150618 必须传入审核结果. 
 		if(args == null) args = new HashMap<String, Object>();
 		 */
-		if (args == null || !args.containsKey(SnakerEngine.AUDITRES)) {
+		if (args == null || !args.containsKey(SnakerEngine.AUDIT_RES)) {
 			throw new RuntimeException("审核未传入审核结果!");
 		}
 		//end by fans.fan

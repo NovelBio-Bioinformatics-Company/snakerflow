@@ -86,6 +86,11 @@ public class Order implements Serializable {
      * 流程实例附属变量
      */
     private String variable;
+    
+    /**
+     * 业务单据Id . add by fans.fan 150702
+     */
+    private String businessId;
 
 	public String getProcessId() {
 		return processId;
@@ -173,7 +178,19 @@ public class Order implements Serializable {
 	public String getVariable() {
 		return variable;
 	}
-	
+    /**
+     * 业务单据Id . add by fans.fan 150702
+     */
+	public String getBusinessId() {
+		return businessId;
+	}
+    /**
+     * 业务单据Id . add by fans.fan 150702
+     */
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getVariableMap() {
         Map<String, Object> map = JsonHelper.fromJson(this.variable, Map.class);

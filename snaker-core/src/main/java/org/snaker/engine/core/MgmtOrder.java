@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.h2.engine.Engine;
 import org.snaker.engine.Completion;
 import org.snaker.engine.IMgmtOrder;
 import org.snaker.engine.SnakerEngine;
@@ -94,6 +95,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 		order.setCreator(operator);
 		order.setLastUpdator(order.getCreator());
 		order.setProcessId(process.getId());
+		order.setBusinessId(String.valueOf(args.get(SnakerEngine.BILLID)));
 		ProcessModel model = process.getModel();
 		if(model != null && args != null) {
 			if(StringHelper.isNotEmpty(model.getExpireTime())) {
@@ -309,5 +311,10 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 	@Override
 	public void delete(String id) {
 		repoOrder.delete(id);
+	}
+
+	@Override
+	public List<Order> findByBusinessId(String businessId) {
+		return repoOrder.findByBusinessId(businessId);
 	}
 }

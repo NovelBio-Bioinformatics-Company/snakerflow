@@ -15,6 +15,6 @@ public interface IMgmtHistoryTask {
 
 	void delete(String id);
 	
-	List<HistoryTask> getHistoryTask(String orderId);
+	List<HistoryTask> findByOrderId(String orderId);
 
 }

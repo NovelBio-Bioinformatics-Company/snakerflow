@@ -34,14 +34,16 @@ public interface SnakerEngine {
    public static final String ID = "snaker.orderNo";
    
 	/** 审核结果参数名 */
-   public static final String AUDITRES = "auditRes";
+	public static final String AUDIT_RES = "auditRes";
 	/** 审核结果具体值:不同意 */
-   public static final String DISAGREE = "0";
+	public static final String DISAGREE = "0";
 	/** 审核结果具体值:同意 */
-   public static final String AGREE = "1";
-   /** 单据Id */
-   public static final String BILLID = "billId";
-	
+	public static final String AGREE = "1";
+	/** 审核意见 */
+	public static final String AUDIT_OPINION = "AuditOpinion";
+	/** 业务单据Id */
+	public static final String BILLID = "billId";
+
 	/**
 	 * 根据Configuration对象配置实现类
 	 * @param config 全局配置对象
