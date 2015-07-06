@@ -308,7 +308,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 		if(execution == null) return Collections.emptyList();
 		ProcessModel model = execution.getProcess().getModel();
 		if(model != null) {
-			NodeModel nodeModel = model.getNode(execution.getTask().getTaskName());
+			NodeModel nodeModel = model.getNode(execution.getTask().getName());
 			//将执行对象交给该任务对应的节点模型执行
 			nodeModel.execute(execution);
 		}

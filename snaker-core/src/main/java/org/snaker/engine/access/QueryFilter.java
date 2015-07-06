@@ -75,7 +75,7 @@ public class QueryFilter implements Serializable {
 	 * 名称
 	 */
 	@QueryCondation
-	private String taskName;
+	private String name;
 	/**
 	 * 显示名称
 	 */
@@ -175,16 +175,16 @@ public class QueryFilter implements Serializable {
 		return this;
 	}
 	public String getName() {
-		return taskName;
+		return name;
 	}
 	public QueryFilter setNames(String name) {
 		AssertHelper.notNull(name);
-		this.taskName = name;
+		this.name = name;
 		return this;
 	}
 	public QueryFilter setName(String name) {
 		AssertHelper.notEmpty(name);
-		this.taskName = name;
+		this.name = name;
 		return this;
 	}
 	public String getDisplayName() {

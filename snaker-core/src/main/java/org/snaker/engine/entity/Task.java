@@ -55,7 +55,7 @@ public class Task implements Serializable, Cloneable {
     /**
      * 任务名称
      */
-	private String taskName;
+	private String name;
 	/**
 	 * 任务显示名称
 	 */
@@ -147,12 +147,12 @@ public class Task implements Serializable, Cloneable {
 		this.variable = variable;
 	}
 
-	public String getTaskName() {
-		return taskName;
+	public String getName() {
+		return name;
 	}
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getTaskType() {
@@ -304,7 +304,7 @@ public class Task implements Serializable, Cloneable {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Task(id=").append(this.id);
 		sb.append(",orderId=").append(this.orderId);
-		sb.append(",taskName=").append(this.taskName);
+		sb.append(",taskName=").append(this.name);
 		sb.append(",displayName").append(this.displayName);
 		sb.append(",taskType=").append(this.taskType);
 		sb.append(",createTime=").append(this.createTime);

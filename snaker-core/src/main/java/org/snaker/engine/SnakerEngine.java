@@ -40,7 +40,7 @@ public interface SnakerEngine {
 	/** 审核结果具体值:同意 */
 	public static final String AGREE = "1";
 	/** 审核意见 */
-	public static final String AUDIT_OPINION = "AuditOpinion";
+	public static final String AUDIT_OPINION = "auditOpinion";
 	/** 业务单据Id */
 	public static final String BILLID = "billId";
 

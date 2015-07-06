@@ -133,7 +133,7 @@ public class HistoryTask implements Serializable {
     	this.orderId = task.getOrderId();
     	this.createTime = task.getCreateTime();
     	this.displayName = task.getDisplayName();
-    	this.taskName = task.getTaskName();
+    	this.taskName = task.getName();
     	this.taskType = task.getTaskType();
     	this.auditRes = task.getAuditRes();
     	this.expireTime = task.getExpireTime();
@@ -151,7 +151,7 @@ public class HistoryTask implements Serializable {
     public Task undoTask() {
     	Task task = new Task();
     	task.setOrderId(this.getOrderId());;
-    	task.setTaskName(this.getTaskName());
+    	task.setName(this.getTaskName());
     	task.setDisplayName(this.getDisplayName());
     	task.setTaskType(this.getTaskType());
     	task.setExpireTime(this.getExpireTime());

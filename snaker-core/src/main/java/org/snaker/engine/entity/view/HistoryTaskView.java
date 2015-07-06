@@ -16,7 +16,7 @@ public class HistoryTaskView {
     /**
      * 审批意见.
      */
-    private String advice;
+    private String auditOpinion;
     /**
      * 任务创建时间
      */
@@ -43,11 +43,12 @@ public class HistoryTaskView {
 			this.auditRes = "不同意";
 		}
 	}
-	public String getAdvice() {
-		return advice;
+	
+	public String getAuditOpinion() {
+		return auditOpinion;
 	}
-	public void setAdvice(String advice) {
-		this.advice = advice;
+	public void setAuditOpinion(String auditOpinion) {
+		this.auditOpinion = auditOpinion;
 	}
 	public String getCreateTime() {
 		return createTime;

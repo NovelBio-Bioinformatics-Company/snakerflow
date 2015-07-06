@@ -7,5 +7,5 @@ public interface IPosition {
 	 * @param fnumbers
 	 * @return
 	 */
-	public String[] findEmployeeIdsByPositonFnumbers(String[] fnumbers);
+	public String[] findUserIdsByPositonFnumbers(String[] fnumbers);
 }

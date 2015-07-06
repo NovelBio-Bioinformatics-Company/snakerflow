@@ -351,7 +351,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		if(StringHelper.isEmpty(parentTaskId) || parentTaskId.equals(START)) {
 			throw new SnakerException("上一步任务ID为空，无法驳回至上一步处理");
 		}
-		NodeModel current = model.getNode(currentTask.getTaskName());
+		NodeModel current = model.getNode(currentTask.getName());
 		HistoryTask history = repoHistoryTask.findOne(parentTaskId);
 		NodeModel parent = model.getNode(history.getTaskName());
 		if(!NodeModel.canRejected(current, parent)) {
@@ -416,7 +416,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
         AssertHelper.notNull(order);
         Process process = SpringFactoryService.getBean(MgmtProcess.class).getProcessById(order.getProcessId());
         ProcessModel model = process.getModel();
-        NodeModel nodeModel = model.getNode(task.getTaskName());
+        NodeModel nodeModel = model.getNode(task.getName());
         AssertHelper.notNull(nodeModel, "任务id无法找到节点模型.");
         if(nodeModel instanceof TaskModel) {
             return (TaskModel)nodeModel;
@@ -441,6 +441,9 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		Date remindDate = DateHelper.processTime(args, taskModel.getReminderTime());
 		String form = (String)args.get(taskModel.getForm());
 		String actionUrl = StringHelper.isEmpty(form) ? taskModel.getForm() : form;
+		//add by fans.fan url中将具体参数值传入进去. 150703
+		actionUrl = actionUrl.replaceAll("#" + SnakerEngine.BILLID + "#", String.valueOf(args.get(SnakerEngine.BILLID)));
+		//end by fans.fan
 		
 		String[] actors = getTaskActors(taskModel, execution);
 		args.put(Task.KEY_ACTOR, StringHelper.getStringByArray(actors));
@@ -457,16 +460,16 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 			tasks.add(task);
 		} else if(taskModel.isPerformAll()){
 			//任务执行方式为参与者中每个都要执行完才可驱动流程继续流转，该方法根据参与者个数产生对应的task数量
-			for(String actor : actors) {
-                Task singleTask;
-                try {
-                    singleTask = (Task) task.clone();
-                } catch (CloneNotSupportedException e) {
-                    singleTask = task;
-                }
-                singleTask = saveTask(singleTask, actor);
-                singleTask.setRemindDate(remindDate);
-                tasks.add(singleTask);
+			for (String actor : actors) {
+				Task singleTask;
+				try {
+					singleTask = (Task) task.clone();
+				} catch (CloneNotSupportedException e) {
+					singleTask = task;
+				}
+				singleTask = saveTask(singleTask, actor);
+				singleTask.setRemindDate(remindDate);
+				tasks.add(singleTask);
 			}
 		}
 		return tasks;
@@ -481,7 +484,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	private Task createTaskBase(TaskModel model, Execution execution) {
 		Task task = new Task();
 		task.setOrderId(execution.getOrder().getId());
-		task.setTaskName(model.getName());
+		task.setName(model.getName());
 		task.setDisplayName(model.getDisplayName());
 		task.setCreateTime(DateHelper.getTime());
 		if(model.isMajor()) {
@@ -489,8 +492,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		} else {
 			task.setTaskType(TaskType.Aidant.ordinal());
 		}
-		task.setParentTaskId(execution.getTask() == null ? 
-				START : execution.getTask().getId());
+		task.setParentTaskId(execution.getTask() == null ? START : execution.getTask().getId());
 		task.setModel(model);
 		return task;
 	}
@@ -529,7 +531,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		}
 		String[] taskActors = getTaskActors(assigneeObject == null ? model.getAssignee() : assigneeObject);
 		//add by fans.fan 
-		return domainPositon.findEmployeeIdsByPositonFnumbers(taskActors);
+		return domainPositon.findUserIdsByPositonFnumbers(taskActors);
 		//end by fans.fan
 	}
 
