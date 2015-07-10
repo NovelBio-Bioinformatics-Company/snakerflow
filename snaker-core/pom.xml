@@ -8,8 +8,10 @@
         <version>2.5.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+	
+	 <groupId>com.novelbio</groupId>
     <artifactId>snaker-core</artifactId>
+     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>snaker-core</name>
     <url>https://github.com/snakerflow/snakerflow</url>
