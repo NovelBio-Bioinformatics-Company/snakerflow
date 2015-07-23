@@ -134,6 +134,11 @@ public class TaskModel extends WorkModel {
 			 * 那么此时需要判断之前分配的所有任务都执行完成后，才可执行下一步，否则不处理
 			 */
 			fire(new MergeActorHandler(getName()), execution);
+			/**
+			 * TODO 如果该步是多人审批.那第一个任审批结果是不同意时,还会让第二个人审批.
+			 *  考虑将来是否多人审批是投票还是一票否决.该步暂不做修改.待将来确定后再优化.
+			 * modify by fans.fan 15023 
+			 */
 			if(execution.isMerged()) runOutTransition(execution);
 		}
 	}

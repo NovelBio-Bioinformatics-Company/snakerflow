@@ -620,7 +620,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	@Override
 	public List<Task> getlsTaskByActorIds(PageModel pageModel,String actorId) {
 		pageModel.setSort("createTime");
-		List lsActorId = new ArrayList<>();
+		List<String> lsActorId = new ArrayList<>();
 		lsActorId.add(actorId);
 		return repoTask.findTaskByActorIds(pageModel.bePageable(),lsActorId);
 	}
