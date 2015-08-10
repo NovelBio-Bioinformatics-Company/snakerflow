@@ -86,7 +86,7 @@ public class Process implements Serializable {
     /**
      * 流程定义
      */
-    @JSONField(serialize = false) 
+//    @JSONField(serialize = false) 
     private String bytes;
     
 	public String getName() {

@@ -128,6 +128,9 @@ public class Task implements Serializable, Cloneable {
     }
     
     public boolean isMajor() {
+    	if (this.taskType == null) {
+			return false;
+		}
     	return this.taskType == TaskType.Major.ordinal();
     }
     

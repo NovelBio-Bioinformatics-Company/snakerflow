@@ -391,6 +391,6 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 	@Override
 	public Object queryProcess(PageModel pageModel, Process queryModel) {
 		Query query = QueryUtil.instance().fillQueryBean(queryModel).build();
-		return PageUtil.changeToEasyuiPage(pageModel, mongoTemplate, query, Process.class, null);
+		return PageUtil.changeToEasyuiPage(pageModel, mongoTemplate, query, Process.class);
 	}
 }
