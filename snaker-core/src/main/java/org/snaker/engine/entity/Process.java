@@ -15,6 +15,7 @@
 package org.snaker.engine.entity;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
 
 import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.model.ProcessModel;
@@ -122,7 +123,7 @@ public class Process implements Serializable {
 	
 	public ProcessModel getModel() {
 		if (model == null && StringUtils.isNotEmpty(bytes)) {
-			model = ModelParser.parse(bytes.getBytes());
+			model = ModelParser.parse(bytes.getBytes(Charset.forName("UTF-8")));
 		}
 		return model;
 	}
