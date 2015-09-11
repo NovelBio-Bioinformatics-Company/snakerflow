@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.snaker.engine.Assignment;
 import org.snaker.engine.AssignmentHandler;
 import org.snaker.engine.Completion;
@@ -64,6 +65,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -75,6 +77,9 @@ import com.alibaba.fastjson.JSON;
  */
 @Component
 public class MgmtTask extends MgmtAccess implements IMgmtTask {
+	
+	private static final Logger logger = Logger.getLogger(MgmtTask.class);
+	
 	private static final String START = "start";
 
 	//访问策略接口
@@ -485,6 +490,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		Task task = new Task();
 		task.setOrderId(execution.getOrder().getId());
 		task.setName(model.getName());
+		logger.info("modelDisplayName=" + model.getDisplayName());
 		task.setDisplayName(model.getDisplayName());
 		task.setCreateTime(DateHelper.getTime());
 		if(model.isMajor()) {
@@ -623,6 +629,16 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		List<String> lsActorId = new ArrayList<>();
 		lsActorId.add(actorId);
 		return repoTask.findTaskByActorIds(pageModel.bePageable(),lsActorId);
+	}
+	
+	public long getCountsByActorIds(PageModel pageModel,String actorId) {
+		pageModel.setSort("createTime");
+		Task task = new Task();
+		Set<String> setActorId = new HashSet<>();
+		setActorId.add(actorId);
+		task.setActorIds(setActorId);
+		Query query = QueryUtil.instance().fillQueryBean(task).build();
+		return mongoTemplate.count(query, Task.class);
 	}
 
 	@Override

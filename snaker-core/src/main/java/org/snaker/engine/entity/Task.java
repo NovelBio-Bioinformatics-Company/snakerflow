@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.snaker.engine.helper.JsonHelper;
+import org.snaker.engine.helper.QueryCondation;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.model.TaskModel.TaskType;
 import org.springframework.data.annotation.Id;
@@ -104,6 +105,7 @@ public class Task implements Serializable, Cloneable {
     /**
      * 任务参与者列表
      */
+    @QueryCondation
     private Set<String> actorIds;
     /**
      * 父任务Id

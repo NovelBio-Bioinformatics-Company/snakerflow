@@ -348,8 +348,8 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
     
     private Integer getLatestProcessVersion(String name){
     	Integer version = 0;
-    	List<Process> lspProcesses = repoProcess.findByName(name);
-    	for (Process process : lspProcesses) {
+    	List<Process> lsProcesses = repoProcess.findByName(name);
+    	for (Process process : lsProcesses) {
 			if (process.getVersion() > version) {
 				version = process.getVersion();
 			}

@@ -174,4 +174,5 @@ public interface IMgmtTask {
 	void save(Task taskdb);
 	
 	void delete(String id);
+	long getCountsByActorIds(PageModel pageModel, String id);
 }
