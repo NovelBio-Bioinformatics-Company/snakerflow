@@ -14,7 +14,6 @@
  */
 package test.query;
 
-import org.h2.mvstore.Page;
 import org.junit.Test;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.model.PageModel;

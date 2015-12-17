@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.h2.engine.Engine;
 import org.snaker.engine.Completion;
 import org.snaker.engine.IMgmtOrder;
 import org.snaker.engine.SnakerEngine;
