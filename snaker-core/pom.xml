@@ -180,12 +180,12 @@
         <dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.6.1.RELEASE</version>
+			<version>1.9.1.RELEASE</version>
 			</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>4.0.5.RELEASE</version>
+			<version>4.2.5.RELEASE</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -195,21 +195,6 @@
 		     <version>1.1.36</version>
 		</dependency>
     </dependencies>
-	<distributionManagement>
-		<!-- use the following if you're not using a snapshot version. -->
-		<repository>
-			<id>my-nexus-releases</id>
-			<name>Internal Releases</name>
-			<url>http://erp.novelbio.com:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<!-- use the following if you ARE using a snapshot version. 	-->
-		<snapshotRepository>
-			<id>my-nexus-releases</id>
-			<name>Internal Releases</name>
-			<url>http://erp.novelbio.com:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	
-	</distributionManagement>
     <build>
 		<defaultGoal>compile</defaultGoal>
 		<sourceDirectory>src/main/java</sourceDirectory>
