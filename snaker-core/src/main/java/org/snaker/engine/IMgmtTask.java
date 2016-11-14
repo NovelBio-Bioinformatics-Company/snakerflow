@@ -21,6 +21,7 @@ import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.model.CustomModel;
+import org.snaker.engine.model.Datagrid;
 import org.snaker.engine.model.PageModel;
 import org.snaker.engine.model.ProcessModel;
 import org.snaker.engine.model.TaskModel;
@@ -167,7 +168,7 @@ public interface IMgmtTask {
      */
    List<Task> getlsTaskByActorIds(PageModel pageModel, String actorId);
    
-	Object queryTaskByPage(PageModel pageModel, Task queryModel);
+   Datagrid queryTaskByPage(PageModel pageModel, Task queryModel);
 	
 	Task find(String id);
 	

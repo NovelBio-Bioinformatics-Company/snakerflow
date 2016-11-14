@@ -26,7 +26,7 @@ public class PageUtil {
 	 * @param lsParams 记录集合
 	 * @return
 	 */
-	public static <T> Object changeToEasyuiPage(Collection<T> lsParams) {
+	public static <T> Datagrid changeToEasyuiPage(Collection<T> lsParams) {
 		return changeToEasyuiPage(lsParams.size(), lsParams);
 	}
 
@@ -36,7 +36,7 @@ public class PageUtil {
 	 * @param page mongoDB返回的分页结果
 	 * @return
 	 */
-	public static <T> Object changeToEasyuiPage(Page<T> page) {
+	public static <T> Datagrid changeToEasyuiPage(Page<T> page) {
 		return changeToEasyuiPage(page, null);
 	}
 	
@@ -47,7 +47,7 @@ public class PageUtil {
 	 * @param clazz viewModel 对应的class
 	 * @return
 	 */
-	public static <T, K> Object changeToEasyuiPage(Page<T> page, Class<K> clazz) {
+	public static <T, K> Datagrid changeToEasyuiPage(Page<T> page, Class<K> clazz) {
 		return changeToEasyuiPage(page.getTotalElements(), page.getContent(), clazz);
 	}
 	
@@ -58,7 +58,7 @@ public class PageUtil {
 	 * @param clazz viewModel 对应的class
 	 * @return
 	 */
-	public static <T, K> Object changeToEasyuiPage(Collection<T> collection, Class<K> clazz) {
+	public static <T, K> Datagrid changeToEasyuiPage(Collection<T> collection, Class<K> clazz) {
 		long total = collection == null ? 0l : collection.size();
 		return changeToEasyuiPage(total, collection, clazz);
 	}
@@ -71,7 +71,7 @@ public class PageUtil {
 	 * @param dataList	分页结果数据.会以json形式输出到页面
 	 * @return
 	 */
-	public static <T> Object changeToEasyuiPage(long total, Collection<T> lsParams) {
+	public static <T> Datagrid changeToEasyuiPage(long total, Collection<T> lsParams) {
 		return changeToEasyuiPage(total, lsParams, null);
 	}
 	
@@ -83,7 +83,7 @@ public class PageUtil {
 	 * @param queryClazz		数据库查询操作返回的结果类型类.
 	 * @return
 	 */
-	public static <T, K> Object changeToEasyuiPage(PageModel pageModel, MongoTemplate mongoTemplate, Query query, Class<T> queryClazz) {
+	public static <T, K> Datagrid changeToEasyuiPage(PageModel pageModel, MongoTemplate mongoTemplate, Query query, Class<T> queryClazz) {
 		return changeToEasyuiPage(pageModel, mongoTemplate, query, queryClazz, null);
 	}
 	
@@ -96,7 +96,7 @@ public class PageUtil {
 	 * @param viewClazz		要转换的view对象类.<b>如和queryClazz类相同,可以直接写null.</b>
 	 * @return
 	 */
-	public static <T, K> Object changeToEasyuiPage(PageModel pageModel, MongoTemplate mongoTemplate, Query query, Class<T> queryClazz, Class<K> viewClazz) {
+	public static <T, K> Datagrid changeToEasyuiPage(PageModel pageModel, MongoTemplate mongoTemplate, Query query, Class<T> queryClazz, Class<K> viewClazz) {
 		long total = mongoTemplate.count(query, queryClazz);
 		List<T> lsData = mongoTemplate.find(query.with(pageModel.bePageable()), queryClazz);
 		
@@ -110,7 +110,7 @@ public class PageUtil {
 	 * @param viewClazz	需要转换成的viewClazz类.<b>如不需要转换,可直接写null</b>
 	 * @return
 	 */
-	public static <T, K> Object changeToEasyuiPage(long total, Collection<T> lsParams, Class<K> viewClazz) {
+	public static <T, K> Datagrid changeToEasyuiPage(long total, Collection<T> lsParams, Class<K> viewClazz) {
 		Datagrid datagrid = null;
 		if (lsParams == null) {
 			datagrid = new Datagrid(0, new ArrayList<>());
@@ -130,7 +130,7 @@ public class PageUtil {
 		} else {
 			datagrid = new Datagrid(total, lsParams);
 		}
-		return JSONObject.toJSON(datagrid);
+		return datagrid;
 	}
 
 	/**
@@ -174,11 +174,11 @@ public class PageUtil {
 	 * @param clazz view类
 	 * @return
 	 */
-	public static <T, K> Object pageList(List<T> params, PageModel pageModel, Class<K> clazz) {
+	public static <T, K> Datagrid pageList(List<T> params, PageModel pageModel, Class<K> clazz) {
 		Datagrid datagrid = null;
 		if (params == null || pageModel == null) {
 			datagrid = new Datagrid(0, null);
-			return JSONObject.toJSON(datagrid);
+			return datagrid;
 		}
 		// 当前页
 		int intPage = (pageModel.getPage() == 0 ? 1 : pageModel.getPage());
@@ -210,7 +210,7 @@ public class PageUtil {
 		} else {
 			datagrid = new Datagrid(params.size(), params1);
 		}
-		return JSONObject.toJSON(datagrid);
+		return datagrid;
 	}
 	
 

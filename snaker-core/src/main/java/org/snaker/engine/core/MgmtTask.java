@@ -54,6 +54,7 @@ import org.snaker.engine.helper.SpringFactoryService;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.impl.GeneralAccessStrategy;
 import org.snaker.engine.model.CustomModel;
+import org.snaker.engine.model.Datagrid;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.model.PageModel;
 import org.snaker.engine.model.ProcessModel;
@@ -65,7 +66,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.repository.query.QueryUtils;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -642,7 +642,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	}
 
 	@Override
-	public Object queryTaskByPage(PageModel pageModel, Task queryModel) {
+	public Datagrid queryTaskByPage(PageModel pageModel, Task queryModel) {
 		Query query = QueryUtil.instance().fillQueryBean(queryModel).build();
 		return PageUtil.changeToEasyuiPage(pageModel, mongoTemplate, query, Task.class);
 	}
