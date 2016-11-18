@@ -130,8 +130,8 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		history.setTaskState(STATE_FINISH);
 		history.setOperator(operator);
 		//add by fans.fan 增加审核结果和审核意见的单独记录. 150702.
-		history.setAuditRes(String.valueOf(args.get(SnakerEngine.AUDIT_RES)));
-		history.setAuditOpinion(String.valueOf(args.get(SnakerEngine.AUDIT_OPINION)));
+		history.setAuditRes(String.valueOf(args != null ? args.get(SnakerEngine.AUDIT_RES) : ""));
+		history.setAuditOpinion(String.valueOf(args != null ? args.get(SnakerEngine.AUDIT_OPINION) : ""));
 		//end by fans.fan
 		if(history.getActorIds() == null) {
 			List<TaskActor> actors = repoTaskActor.findlsTaskActorsByTaskId(task.getId());
@@ -647,6 +647,12 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 		return PageUtil.changeToEasyuiPage(pageModel, mongoTemplate, query, Task.class);
 	}
 
+	@Override
+	public List<Task> queryTask(Task task){
+		Query query = QueryUtil.instance().fillQueryBean(task).build();
+		return mongoTemplate.find(query, Task.class);
+	}
+	
 	@Override
 	public Task find(String id) {
 		return repoTask.findOne(id);

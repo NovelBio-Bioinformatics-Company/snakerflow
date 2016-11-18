@@ -114,6 +114,7 @@ public class Task implements Serializable, Cloneable {
 	/**
      * 任务附属变量
      */
+    @QueryCondation
     private String variable;
     /**
      * 保持模型对象
