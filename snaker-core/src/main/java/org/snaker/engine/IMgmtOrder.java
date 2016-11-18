@@ -140,4 +140,6 @@ public interface IMgmtOrder {
 	 * @return
 	 */
 	public List<Order> findByBusinessId(String businessId);
+
+	List<Order> queryOrder(Order order);
 }

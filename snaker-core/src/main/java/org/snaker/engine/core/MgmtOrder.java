@@ -296,6 +296,12 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 		Query query = QueryUtil.instance().fillQueryBean(queryModel).build();
 		return PageUtil.changeToEasyuiPage(pageModel, mongoTemplate, query, Order.class, Order.class);
 	}
+	
+	@Override
+	public List<Order> queryOrder(Order order) {
+		Query query = QueryUtil.instance().fillQueryBean(order).build();
+		return mongoTemplate.find(query, Order.class);
+	}
 
 	@Override
 	public Order find(String id) {

@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.snaker.engine.helper.JsonHelper;
+import org.snaker.engine.helper.QueryCondation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -45,6 +46,7 @@ public class Order implements Serializable {
 	/**
 	 * 流程定义ID
 	 */
+	@QueryCondation
     private String processId;
     /**
      * 流程实例创建者ID
@@ -90,6 +92,7 @@ public class Order implements Serializable {
     /**
      * 业务单据Id . add by fans.fan 150702
      */
+    @QueryCondation
     private String businessId;
 
 	public String getProcessId() {
