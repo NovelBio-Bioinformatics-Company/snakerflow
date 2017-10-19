@@ -105,7 +105,9 @@ public class QueryUtil {
 			case EMPTY:
 				Object likeValue2 = mapLogicKey2Value.get(logicPropertyName);
 				if (likeValue2 instanceof String) {
-					like(propertyName, (String) likeValue2);
+					is(propertyName, (String) likeValue2);
+				} else if (likeValue2 instanceof Integer) {
+					is(propertyName, likeValue2);
 				}
 				break;
 			}
