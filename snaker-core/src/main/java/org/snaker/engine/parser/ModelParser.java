@@ -20,7 +20,7 @@ import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.snaker.engine.SnakerException;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.helper.XmlHelper;
 import org.snaker.engine.model.NodeModel;
 import org.snaker.engine.model.ProcessModel;
@@ -99,7 +99,7 @@ public class ModelParser {
 		NodeParser nodeParser = null;
 		try {
 //			nodeParser = ServiceContext.getContext().findByName(nodeName, NodeParser.class);
-			nodeParser = (NodeParser) SpringFactoryService.getBean(nodeName);
+			nodeParser = (NodeParser) SpringContextListener.getContext().getBean(nodeName);
 			nodeParser.parse(element);
 			return nodeParser.getModel();
 		} catch (RuntimeException e) {

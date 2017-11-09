@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Task;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.model.TaskModel;
 import org.snaker.engine.scheduling.IScheduler;
 import org.snaker.engine.scheduling.JobEntity;
@@ -88,7 +88,7 @@ public class SchedulerInterceptor implements SnakerInterceptor {
 	
 	private void schedule(JobEntity entity) {
 	    if(scheduler == null) {
-	    	scheduler = SpringFactoryService.getBean(IScheduler.class);
+	    	scheduler = SpringContextListener.getContext().getBean(IScheduler.class);
 	    }
 	    if(scheduler != null) {
 	    	scheduler.schedule(entity);

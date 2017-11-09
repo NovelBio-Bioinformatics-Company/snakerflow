@@ -22,7 +22,7 @@ import org.snaker.engine.SnakerException;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.handlers.IHandler;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.impl.LogInterceptor;
 import org.snaker.engine.impl.SchedulerInterceptor;
 import org.snaker.engine.impl.SurrogateInterceptor;
@@ -58,13 +58,13 @@ public class CreateTaskHandler implements IHandler {
 		 * 从服务上下文中查找任务拦截器列表，依次对task集合进行拦截处理
 		 */
 		try {
-			LogInterceptor logInterceptor = (LogInterceptor) SpringFactoryService.getBean(LogInterceptor.class);
+			LogInterceptor logInterceptor = (LogInterceptor) SpringContextListener.getContext().getBean(LogInterceptor.class);
 			logInterceptor.intercept(execution);
 			
-			SchedulerInterceptor schedulerInterceptor = (SchedulerInterceptor) SpringFactoryService.getBean(SchedulerInterceptor.class);
+			SchedulerInterceptor schedulerInterceptor = (SchedulerInterceptor) SpringContextListener.getContext().getBean(SchedulerInterceptor.class);
 			schedulerInterceptor.intercept(execution);
 			
-			SurrogateInterceptor surrogateInterceptor = (SurrogateInterceptor) SpringFactoryService.getBean(SurrogateInterceptor.class);
+			SurrogateInterceptor surrogateInterceptor = (SurrogateInterceptor) SpringContextListener.getContext().getBean(SurrogateInterceptor.class);
 			surrogateInterceptor.intercept(execution);
 		} catch(Exception e) {
 			log.error("拦截器执行失败=" + e.getMessage(),e);

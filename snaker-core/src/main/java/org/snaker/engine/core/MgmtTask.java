@@ -50,7 +50,7 @@ import org.snaker.engine.helper.DateHelper;
 import org.snaker.engine.helper.JsonHelper;
 import org.snaker.engine.helper.PageUtil;
 import org.snaker.engine.helper.QueryUtil;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.impl.GeneralAccessStrategy;
 import org.snaker.engine.model.CustomModel;
@@ -419,7 +419,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
         AssertHelper.notNull(task);
         Order order = repoOrder.findOne(task.getOrderId());
         AssertHelper.notNull(order);
-        Process process = SpringFactoryService.getBean(MgmtProcess.class).getProcessById(order.getProcessId());
+        Process process = SpringContextListener.getContext().getBean(MgmtProcess.class).getProcessById(order.getProcessId());
         ProcessModel model = process.getModel();
         NodeModel nodeModel = model.getNode(task.getName());
         AssertHelper.notNull(nodeModel, "任务id无法找到节点模型.");
@@ -608,7 +608,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
         if(strategy != null) {
             return strategy;
         }
-		strategy = SpringFactoryService.getBean(GeneralAccessStrategy.class);
+		strategy = SpringContextListener.getContext().getBean(GeneralAccessStrategy.class);
 		return strategy;
 	}
 	

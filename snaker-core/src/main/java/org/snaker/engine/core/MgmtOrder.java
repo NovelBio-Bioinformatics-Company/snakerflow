@@ -38,7 +38,7 @@ import org.snaker.engine.helper.DateHelper;
 import org.snaker.engine.helper.JsonHelper;
 import org.snaker.engine.helper.PageUtil;
 import org.snaker.engine.helper.QueryUtil;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.PageModel;
 import org.snaker.engine.model.ProcessModel;
@@ -220,7 +220,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 	 * 强制中止活动实例,并强制完成活动任务
 	 */
 	public void terminate(String orderId, String operator) {
-		SnakerEngine engine = SpringFactoryService.getBean(SnakerEngineImpl.class);
+		SnakerEngine engine = SpringContextListener.getContext().getBean(SnakerEngineImpl.class);
 		List<Task> tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
 		for (Task task : tasks) {
 			engine.task().complete(task.getId(), operator);
@@ -250,7 +250,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
         historyOrder.setOrderState(STATE_ACTIVE);
         repoHistoryOrder.save(historyOrder);
 
-        SnakerEngine engine = SpringFactoryService.getBean(SnakerEngineImpl.class);
+        SnakerEngine engine = SpringContextListener.getContext().getBean(SnakerEngineImpl.class);
         List<HistoryTask> histTasks = mgmtHistoryTask.getHistoryTasks(null,
                 new QueryFilter().setOrderId(orderId));
         if(histTasks != null ) {

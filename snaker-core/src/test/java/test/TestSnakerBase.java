@@ -18,7 +18,7 @@ import org.snaker.engine.IMgmtProcess;
 import org.snaker.engine.IMgmtQuery;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.core.SnakerEngineImpl;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 
 /**
  * 测试辅助基类，提供execute的递归方法及SnakerEngine实例
@@ -33,6 +33,6 @@ public class TestSnakerBase {
 	protected static SnakerEngine getEngine() {
 //		return new Configuration().buildSnakerEngine();
 		
-		return SpringFactoryService.getBean(SnakerEngineImpl.class);
+		return SpringContextListener.getContext().getBean(SnakerEngineImpl.class);
 	}
 }

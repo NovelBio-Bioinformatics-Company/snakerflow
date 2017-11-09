@@ -33,7 +33,7 @@ import org.snaker.engine.helper.AssertHelper;
 import org.snaker.engine.helper.DateHelper;
 import org.snaker.engine.helper.PageUtil;
 import org.snaker.engine.helper.QueryUtil;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.PageModel;
@@ -273,7 +273,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 		List<HistoryOrder> historyOrders = mgmtHistoryOrder.getHistoryOrders(null, new QueryFilter().setProcessId(id));
 
 		for(HistoryOrder historyOrder : historyOrders) {
-			SpringFactoryService.getBean(MgmtOrder.class).cascadeRemove(historyOrder.getId());
+			SpringContextListener.getContext().getBean(MgmtOrder.class).cascadeRemove(historyOrder.getId());
 		}
 		repoProcess.delete(entity);
 		clear(entity);

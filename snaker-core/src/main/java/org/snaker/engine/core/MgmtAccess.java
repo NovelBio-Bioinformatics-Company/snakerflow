@@ -15,7 +15,7 @@
 package org.snaker.engine.core;
 
 import org.snaker.engine.Completion;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.impl.GeneralCompletion;
 
 /**
@@ -71,7 +71,7 @@ public abstract class MgmtAccess {
             return completion;
         }
 
-        completion = SpringFactoryService.getBean(GeneralCompletion.class);
+        completion = SpringContextListener.getContext().getBean(GeneralCompletion.class);
         return completion;
     }
 }

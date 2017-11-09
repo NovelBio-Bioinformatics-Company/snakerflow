@@ -21,7 +21,7 @@ import java.util.Map;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.core.SnakerEngineImpl;
 import org.snaker.engine.helper.JsonHelper;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -216,7 +216,7 @@ public class HistoryOrder implements Serializable {
     }
 	
 	public String getProcessName() {
-		SnakerEngine engine = SpringFactoryService.getBean(SnakerEngineImpl.class);
+		SnakerEngine engine = SpringContextListener.getContext().getBean(SnakerEngineImpl.class);
 		Process process = engine.process().getProcessById(this.processId);
 		if(process == null) return this.processId;
 		return process.getDisplayName();

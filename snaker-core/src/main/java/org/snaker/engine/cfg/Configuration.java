@@ -31,7 +31,7 @@ import org.snaker.engine.core.ServiceContext;
 import org.snaker.engine.core.SnakerEngineImpl;
 import org.snaker.engine.helper.ClassHelper;
 import org.snaker.engine.helper.ConfigHelper;
-import org.snaker.engine.helper.SpringFactoryService;
+import org.snaker.engine.helper.SpringContextListener;
 import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.helper.XmlHelper;
@@ -100,7 +100,7 @@ public class Configuration {
 		/**
 		 * 由服务上下文返回流程引擎
 		 */
-		SnakerEngine configEngine = SpringFactoryService.getBean(SnakerEngineImpl.class);
+		SnakerEngine configEngine = SpringContextListener.getContext().getBean(SnakerEngineImpl.class);
 		if(configEngine == null) {
 			throw new SnakerException("配置无法发现SnakerEngine的实现类");
 		}
