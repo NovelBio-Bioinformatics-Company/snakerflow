@@ -3,6 +3,7 @@ package org.snaker.engine.helper;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -108,6 +109,8 @@ public class QueryUtil {
 					is(propertyName, (String) likeValue2);
 				} else if (likeValue2 instanceof Integer) {
 					is(propertyName, likeValue2);
+				} else if (likeValue2 instanceof HashSet) {
+					in(propertyName, (HashSet<?>) likeValue2);
 				}
 				break;
 			}
@@ -140,13 +143,27 @@ public class QueryUtil {
 	 * 
 	 * @param propertyName
 	 *            属性名
-	 * @param value
+	 * @param likeValue2
 	 *            查询的约束值
 	 * @return 当前QueryUtil对象
 	 */
-	public QueryUtil in(String propertyName, Collection<?> value) {
+	public QueryUtil in(String propertyName, Object likeValue2) {
 
-		query.addCriteria(Criteria.where(propertyName).in(value));
+		query.addCriteria(Criteria.where(propertyName).in(likeValue2));
+		return this;
+	}
+	
+	/**
+	 * 添加{propertyName}的<b>in</b>查询约束<br>
+	 * 
+	 * @param propertyName
+	 *            属性名
+	 * @param likeValue2
+	 *            查询的约束值
+	 * @return 当前QueryUtil对象
+	 */
+	public QueryUtil in(String propertyName, Collection<?> likeValue2) {
+		query.addCriteria(Criteria.where(propertyName).in(likeValue2));
 		return this;
 	}
 
