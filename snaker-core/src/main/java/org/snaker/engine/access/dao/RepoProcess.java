@@ -16,6 +16,6 @@ public interface RepoProcess extends PagingAndSortingRepository<Process, String>
 	public Page<Process> findAll(Pageable pageable);
 	
 	
-	@Query(value="{'name':?0}")
+	@Query(value="{name:?0}")
 	public List<Process> findByName(String name);
 }

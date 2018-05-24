@@ -379,6 +379,7 @@ public class SnakerEngineImpl implements SnakerEngine {
 		AssertHelper.notNull(order, "指定的流程实例[id=" + task.getOrderId() + "]已完成或不存在");
 		order.setLastUpdator(operator);
 		order.setLastUpdateTime(DateHelper.getTime());
+		order.getVariableMap().put(SnakerEngine.AUDIT_RES, args.get(SnakerEngine.AUDIT_RES));
 		order().updateOrder(order);
 		//协办任务完成不产生执行对象
 		if(!task.isMajor()) {

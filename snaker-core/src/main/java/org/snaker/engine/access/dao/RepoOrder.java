@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface RepoOrder extends PagingAndSortingRepository<Order, String>{
 
-	@Query(value="{'businessId':?0}")
+	@Query(value="{businessId:?0}")
 	List<Order> findByBusinessId(String businessId);
 }

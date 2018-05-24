@@ -17,7 +17,7 @@ public interface RepoTask extends PagingAndSortingRepository<Task, String> {
 	 * @param parentTaskId 父任务id
 	 * @return List<Task> 活动任务集合
 	 */
-	@Query(value="{'parentTaskId':?0}")
+	@Query(value="{parentTaskId:?0}")
 	public List<Task> getNextActiveTasks(String parentTaskId);
 	
 	/**
@@ -27,9 +27,9 @@ public interface RepoTask extends PagingAndSortingRepository<Task, String> {
 	 * @param parentTaskId 父任务id
 	 * @return List<Task> 活动任务集合
 	 */
-	@Query(value="{'orderId':?0, 'taskName':?1,'parentTaskId':?2 }")
+	@Query(value="{orderId:?0, taskName:?1,parentTaskId:?2 }")
 	public List<Task> getNextActiveTasks(String orderId, String taskName, String parentTaskId);
 
-	@Query(value="{'actorIds':{'$in': ?0}}")
+	@Query(value="{actorIds:{$in: ?0}}")
 	public List<Task> findTaskByActorIds(Pageable pageable, List<String> lsActorId);
 }
