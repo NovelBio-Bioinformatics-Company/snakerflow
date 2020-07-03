@@ -43,7 +43,7 @@
     
     <properties>
 		<jdk.source>1.8</jdk.source>
-		<spring.version>4.3.13.RELEASE</spring.version>
+		<spring.version>4.3.27.RELEASE</spring.version>
 		<spring-data-mongodb.version>1.10.9.RELEASE</spring-data-mongodb.version>
 	</properties>
     
