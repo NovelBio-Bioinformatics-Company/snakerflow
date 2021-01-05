@@ -119,7 +119,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * @see SnakerEngineImpl#executeTask(String, String, java.util.Map)
 	 */
 	public Task complete(String taskId, String operator, Map<String, Object> args) {
-		Task task = repoTask.findOne(taskId);
+		Task task = repoTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(task, "指定的任务[id=" + taskId + "]不存在");
 		task.setVariable(JSON.toJSONString(args));
 		if(!isAllowed(task, operator)) {
@@ -197,7 +197,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * 提取指定任务，设置完成时间及操作人，状态不改变
 	 */
 	public Task take(String taskId, String operator) {
-		Task task = repoTask.findOne(taskId);
+		Task task = repoTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(task, "指定的任务[id=" + taskId + "]不存在");
 		if(!isAllowed(task, operator)) {
 			throw new SnakerException("当前参与者[" + operator + "]不允许提取任务[taskId=" + taskId + "]");
@@ -212,7 +212,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
      * 唤醒指定的历史任务
      */
     public Task resume(String taskId, String operator) {
-        HistoryTask histTask = repoHistoryTask.findOne(taskId);
+        HistoryTask histTask = repoHistoryTask.findById(taskId).orElse(null);
         AssertHelper.notNull(histTask, "指定的历史任务[id=" + taskId + "]不存在");
         boolean isAllowed = true;
         if(StringHelper.isNotEmpty(histTask.getOperator())) {
@@ -242,7 +242,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * 该方法根据performType类型判断是否需要创建新的活动任务
 	 */
 	public void addTaskActor(String taskId, Integer performType, String... actors) {
-		Task task = repoTask.findOne(taskId);
+		Task task = repoTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(task, "指定的任务[id=" + taskId + "]不存在");
 		if(!task.isMajor()) return;
 		if(performType == null) performType = task.getPerformType();
@@ -282,7 +282,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * 向指定任务移除参与者
 	 */
 	public void removeTaskActor(String taskId, String... actors) {
-		Task task = repoTask.findOne(taskId);
+		Task task = repoTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(task, "指定的任务[id=" + taskId + "]不存在");
 		if(actors == null || actors.length == 0) return;
 		if(task.isMajor()) {
@@ -324,7 +324,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * 撤回指定的任务
 	 */
 	public Task withdrawTask(String taskId, String operator) {
-		HistoryTask hist = repoHistoryTask.findOne(taskId);
+		HistoryTask hist = repoHistoryTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(hist, "指定的历史任务[id=" + taskId + "]不存在");
 		List<Task> tasks;
 		if(hist.isPerformAny()) {
@@ -357,7 +357,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 			throw new SnakerException("上一步任务ID为空，无法驳回至上一步处理");
 		}
 		NodeModel current = model.getNode(currentTask.getName());
-		HistoryTask history = repoHistoryTask.findOne(parentTaskId);
+		HistoryTask history = repoHistoryTask.findById(parentTaskId).orElse(null);
 		NodeModel parent = model.getNode(history.getTaskName());
 		if(!NodeModel.canRejected(current, parent)) {
 			throw new SnakerException("无法驳回至上一步处理，请确认上一步骤并非fork、join、suprocess以及会签任务");
@@ -394,7 +394,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	 * 适用于转派，动态协办处理
 	 */
 	public List<Task> createNewTask(String taskId, int taskType, String... actors) {
-		Task task = repoTask.findOne(taskId);
+		Task task = repoTask.findById(taskId).orElse(null);
 		AssertHelper.notNull(task, "指定的任务[id=" + taskId + "]不存在");
 		List<Task> tasks = new ArrayList<Task>();
 		try {
@@ -415,9 +415,9 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
      * @return TaskModel
      */
     public TaskModel getTaskModel(String taskId) {
-        Task task = repoTask.findOne(taskId);
+        Task task = repoTask.findById(taskId).orElse(null);
         AssertHelper.notNull(task);
-        Order order = repoOrder.findOne(task.getOrderId());
+        Order order = repoOrder.findById(task.getOrderId()).orElse(null);
         AssertHelper.notNull(order);
         Process process = SpringContextListener.getContext().getBean(MgmtProcess.class).getProcessById(order.getProcessId());
         ProcessModel model = process.getModel();
@@ -655,7 +655,7 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 	
 	@Override
 	public Task find(String id) {
-		return repoTask.findOne(id);
+		return repoTask.findById(id).orElse(null);
 	}
 
 	@Override
@@ -665,6 +665,6 @@ public class MgmtTask extends MgmtAccess implements IMgmtTask {
 
 	@Override
 	public void delete(String id) {
-		repoTask.delete(id);
+		repoTask.deleteById(id);
 	}
 }

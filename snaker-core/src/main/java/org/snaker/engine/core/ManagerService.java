@@ -59,7 +59,7 @@ public class ManagerService extends MgmtAccess implements IMgmtManager {
 	}
 
 	public Surrogate getSurrogate(String id) {
-		return repoSurrogate.findOne(id);
+		return repoSurrogate.findById(id).orElse(null);
 	}
 	
 	public List<Surrogate> getSurrogate(QueryFilter queryFilter) {

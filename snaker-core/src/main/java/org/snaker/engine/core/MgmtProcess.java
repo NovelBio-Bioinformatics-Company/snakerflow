@@ -131,7 +131,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 			}
 			return process;
 		}
-		process = repoProcess.findOne(id);
+		process = repoProcess.findById(id).orElse(null);
 		if(process != null) {
 			if(log.isDebugEnabled()) {
 				log.debug("obtain process[id={}] from database.", id);
@@ -232,7 +232,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 	 */
 	public void redeploy(String id, InputStream input) {
 		AssertHelper.notNull(input);
-		Process entity = repoProcess.findOne(id);
+		Process entity = repoProcess.findById(id).orElse(null);
 		AssertHelper.notNull(entity);
 		try {
 			byte[] bytes = StreamHelper.readBytes(input);
@@ -259,7 +259,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 	 * 根据processId卸载流程
 	 */
 	public void undeploy(String id) {
-		Process entity = repoProcess.findOne(id);
+		Process entity = repoProcess.findById(id).orElse(null);
 		entity.setState(STATE_FINISH);
 		repoProcess.save(entity);
 		cache(entity);
@@ -269,7 +269,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 	 * 级联删除指定流程定义的所有数据
 	 */
 	public void cascadeRemove(String id) {
-		Process entity = repoProcess.findOne(id);
+		Process entity = repoProcess.findById(id).orElse(null);
 		List<HistoryOrder> historyOrders = mgmtHistoryOrder.getHistoryOrders(null, new QueryFilter().setProcessId(id));
 
 		for(HistoryOrder historyOrder : historyOrders) {
@@ -362,7 +362,7 @@ public class MgmtProcess extends MgmtAccess implements IMgmtProcess, CacheManage
 	 * @param id
 	 */
     public void del(String id){
-    	repoProcess.delete(id);
+    	repoProcess.deleteById(id);
     }
 
     

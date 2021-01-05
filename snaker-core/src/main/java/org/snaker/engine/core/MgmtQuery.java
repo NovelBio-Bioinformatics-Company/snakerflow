@@ -60,11 +60,11 @@ public class MgmtQuery extends MgmtAccess implements IMgmtQuery {
 	MgmtTask taskService;
 	
 	public Order getOrder(String orderId) {
-		return repoOrder.findOne(orderId);
+		return repoOrder.findById(orderId).orElse(null);
 	}
 	
 	public Task getTask(String taskId) {
-		return repoTask.findOne(taskId);
+		return repoTask.findById(taskId).orElse(null);
 	}
 	
 	public String[] getTaskActorsByTaskId(String taskId) {
@@ -94,11 +94,11 @@ public class MgmtQuery extends MgmtAccess implements IMgmtQuery {
 	}
 
 	public HistoryOrder getHistOrder(String orderId) {
-		return repoHistoryOrder.findOne(orderId);
+		return repoHistoryOrder.findById(orderId).orElse(null);
 	}
 
 	public HistoryTask getHistTask(String taskId) {
-		return repoHistoryTask.findOne(taskId);
+		return repoHistoryTask.findById(taskId).orElse(null);
 	}
 	
 	public List<Task> getActiveTasks(QueryFilter filter) {

@@ -120,7 +120,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
      * @param args 变量数据
      */
     public void addVariable(String orderId, Map<String, Object> args) {
-        Order order = repoOrder.findOne(orderId);
+        Order order = repoOrder.findById(orderId).orElse(null);
         Map<String, Object> data = order.getVariableMap();
         data.putAll(args);
         order.setVariable(JsonHelper.toJson(data));
@@ -195,8 +195,8 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 	 * 删除活动流程实例数据，更新历史流程实例的状态、结束时间
 	 */
 	public void complete(String orderId) {
-		Order order = repoOrder.findOne(orderId);
-		HistoryOrder history = repoHistoryOrder.findOne(orderId);
+		Order order = repoOrder.findById(orderId).orElse(null);
+		HistoryOrder history = repoHistoryOrder.findById(orderId).orElse(null);
 		history.setOrderState(STATE_FINISH);
 		history.setEndTime(DateHelper.getTime());
 
@@ -225,7 +225,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 		for (Task task : tasks) {
 			engine.task().complete(task.getId(), operator);
 		}
-		Order order = repoOrder.findOne(orderId);
+		Order order = repoOrder.findById(orderId).orElse(null);
 		HistoryOrder history = new HistoryOrder(order);
 		history.setOrderState(STATE_TERMINATION);
 		history.setEndTime(DateHelper.getTime());
@@ -244,7 +244,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
      * @return 活动实例对象
      */
     public Order resume(String orderId) {
-        HistoryOrder historyOrder = repoHistoryOrder.findOne(orderId);
+        HistoryOrder historyOrder = repoHistoryOrder.findById(orderId).orElse(null);
         Order order = historyOrder.undo();
         repoOrder.save(order);
         historyOrder.setOrderState(STATE_ACTIVE);
@@ -269,7 +269,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 	 * @param id 实例id
 	 */
 	public void cascadeRemove(String id) {
-		HistoryOrder historyOrder = repoHistoryOrder.findOne(id);
+		HistoryOrder historyOrder = repoHistoryOrder.findById(id).orElse(null);
 		AssertHelper.notNull(historyOrder);
 		List<Task> activeTasks = taskService.getActiveTasks(null, new QueryFilter().setOrderId(id));
 		List<HistoryTask> historyTasks = mgmtHistoryTask.getHistoryTasks(null, new QueryFilter().setOrderId(id));
@@ -284,7 +284,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 			repoCCOrder.delete(ccOrder);
 		}
 
-		Order order = repoOrder.findOne(id);
+		Order order = repoOrder.findById(id).orElse(null);
 		repoHistoryOrder.delete(historyOrder);
 		if(order != null) {
 			repoOrder.delete(order);
@@ -305,7 +305,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 
 	@Override
 	public Order find(String id) {
-		return repoOrder.findOne(id);
+		return repoOrder.findById(id).orElse(null);
 	}
 
 	@Override
@@ -315,7 +315,7 @@ public class MgmtOrder extends MgmtAccess implements IMgmtOrder {
 
 	@Override
 	public void delete(String id) {
-		repoOrder.delete(id);
+		repoOrder.deleteById(id);
 	}
 
 	@Override

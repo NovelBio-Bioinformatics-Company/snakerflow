@@ -27,7 +27,7 @@ public class MgmtTaskActor implements IMgmtTaskActor {
 
 	@Override
 	public TaskActor find(String id) {
-		return repoTaskActor.findOne(id);
+		return repoTaskActor.findById(id).orElse(null);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class MgmtTaskActor implements IMgmtTaskActor {
 
 	@Override
 	public void delete(String id) {
-		repoTaskActor.delete(id);
+		repoTaskActor.deleteById(id);
 	}
 
 }

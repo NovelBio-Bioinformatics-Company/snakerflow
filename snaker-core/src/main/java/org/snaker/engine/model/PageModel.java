@@ -56,9 +56,9 @@ public class PageModel {
 	public Pageable bePageable() {
 		Pageable pageable = null;
 		if (sort != null && order != null) {
-			pageable = new PageRequest(page - 1, rows, Direction.fromString(this.order), this.sort);
+			pageable = PageRequest.of(page - 1, rows, Direction.fromString(this.order), this.sort);
 		} else {
-			pageable = new PageRequest(page - 1, rows);
+			pageable = PageRequest.of(page - 1, rows);
 		}
 		return pageable;
 	}

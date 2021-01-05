@@ -30,7 +30,7 @@ public class MgmtHistoryOrder {
 		return mongoTemplate.find(query.with(pageable), HistoryOrder.class);
 	}
 	
-	public HistoryOrder findOne(String id){
-		return repoHistoryOrder.findOne(id);
+	public HistoryOrder findById(String id){
+		return repoHistoryOrder.findById(id).orElse(null);
 	}
 }

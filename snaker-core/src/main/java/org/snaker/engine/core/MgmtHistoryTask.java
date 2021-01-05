@@ -37,7 +37,7 @@ public class MgmtHistoryTask implements IMgmtHistoryTask {
 	}
 	@Override
 	public HistoryTask find(String id) {
-		return repoHistoryTask.findOne(id);
+		return repoHistoryTask.findById(id).orElse(null);
 	}
 	@Override
 	public void save(HistoryTask historyTaskdb) {
@@ -45,7 +45,7 @@ public class MgmtHistoryTask implements IMgmtHistoryTask {
 	}
 	@Override
 	public void delete(String id) {
-		repoHistoryTask.delete(id);
+		repoHistoryTask.deleteById(id);
 	}
 	@Override
 	public List<HistoryTask> findByOrderId(String orderId) {
